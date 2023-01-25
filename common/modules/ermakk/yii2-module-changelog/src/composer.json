@@ -1,0 +1,34 @@
+{
+  "name": "ermakk/yii2-module-changelog",
+  "description": "Yii2 module to add likes system in your models.",
+  "type": "yii2-extension",
+  "minimum-stability": "stable",
+  "keywords": [
+    "ermakk",
+    "yii2 module",
+    "likes",
+    "votes",
+    "yii",
+    "yii2",
+    "yii 2"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "ermakk",
+      "email": "los-van@mail.ru",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+
+  },
+  "require-dev": {
+
+  },
+  "autoload": {
+    "psr-4": {
+      "Ermakk\\Yii2ModuleLikes\\": "src/"
+    }
+  }
+}

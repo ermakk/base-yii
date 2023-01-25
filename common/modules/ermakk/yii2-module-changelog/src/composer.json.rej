@@ -1,0 +1,9 @@
+diff a/composer.json b/composer.json	(rejected hunks)
+@@ -35,5 +35,6 @@
+   "repositories": [
+     {
+       "type": "composer",
++      "url": "https://github.com/ermakk/Yii2-module-likes"
+     }
+   ]
+\ No newline at end of file
