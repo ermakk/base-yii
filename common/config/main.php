@@ -5,12 +5,25 @@ return [
         '@npm'   => '@vendor/npm-asset',
     ],
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
+    'extensions' => yii\helpers\ArrayHelper::merge(
+        require(dirname(dirname(__DIR__)) . '/vendor/yiisoft/extensions.php'),
+        [
+            'blacksesion/yii2-eav' => [
+                'name' => 'blacksesion/yii2-eav',
+                'version' => '1.1.3.0',
+                'alias' => [
+                    '@blacksesion/eav' => '@common/modules/blacksesion/yii2-eav/src',
+                ],
+            ],
+        ]
+    ),
+
     'modules' => [
         'user' => [
             'class' => \dektrium\user\Module::className(),
         ],
         'eav' => [
-            'class' => 'mirocow\eav\Module',
+            'class' => \blacksesion\eav\Module::className(),
         ],
         'rbac' => 'dektrium\rbac\RbacWebModule',
         'gii' => [
@@ -39,9 +52,9 @@ return [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-        'authManager' => [
-            'class' => 'yii\rbac\PhpManager', // or use 'yii\rbac\DbManager'
-        ],
+//        'authManager' => [
+//            'class' => 'yii\rbac\PhpManager', // or use 'yii\rbac\DbManager'
+//        ],
         'i18n' => [
             'translations' => [
                 'app*' => [
@@ -55,7 +68,7 @@ return [
                 ],
                 'eav' => [
                     'class' => 'yii\i18n\PhpMessageSource',
-                    'basePath' => '@mirocow/eav/messages',
+                    'basePath' => '@blacksesion/eav/messages',
                 ],
                 'ermakk-changelog' => [
                     'class' => 'yii\i18n\PhpMessageSource',
@@ -67,9 +80,9 @@ return [
                 ],
             ],
         ],
-//        'authManager' => [
-//            'class' => \dektrium\rbac\components\DbManager::className(),
-//        ],
+        'authManager' => [
+            'class' => \dektrium\rbac\components\DbManager::className(),
+        ],
     ],
 
 ];

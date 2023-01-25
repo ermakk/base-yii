@@ -13,6 +13,11 @@
         "source": "https://github.com/yiisoft/yii2"
     },
     "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "blacksesion\\eav\\":  "common/modules/blacksesion/yii2-eav/src"
+        }
+    },
     "require": {
         "php": ">=5.6.0",
         "yiisoft/yii2": "~2.0.14",
@@ -31,7 +36,6 @@
         "kartik-v/yii2-datecontrol": "dev-master",
         "artem-frolov/yii-sass": "^2.0",
         "voskobovich/yii2-many-many-behavior": "^3.2",
-        "mirocow/yii2-eav": "*",
         "hail812/yii2-adminlte3": "^1.1"
     },
     "require-dev": {
@@ -50,6 +54,9 @@
         "process-timeout": 1800,
         "fxp-asset": {
             "enabled": false
+        },
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true
         }
     },
     "repositories": [

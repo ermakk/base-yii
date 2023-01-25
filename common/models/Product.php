@@ -2,6 +2,9 @@
 
 namespace common\models;
 
+use blacksesion\eav\EavBehavior;
+use blacksesion\eav\models\EavAttribute;
+use blacksesion\eav\models\EavAttributeValue;
 use ermakk\changelog\models\ActiveRecord;
 use Yii;
 
@@ -67,8 +70,8 @@ class Product extends ActiveRecord
     {
         return [
             'eav' => [
-                'class' => \mirocow\eav\EavBehavior::className(),
-                'valueClass' => \mirocow\eav\models\EavAttributeValue::className(),
+                'class' => EavBehavior::className(),
+                'valueClass' => EavAttributeValue::className(),
             ]
         ];
     }
@@ -78,7 +81,7 @@ class Product extends ActiveRecord
      */
     public function getEavAttributes()
     {
-        return \mirocow\eav\models\EavAttribute::find()
+        return EavAttribute::find()
             ->joinWith('entity')
             ->where([
                 'eav_entity.categoryId' => $this->category_id,

@@ -1,0 +1,29 @@
+{
+  "name": "blacksesion/yii2-eav",
+  "description": "EAV para Yii2",
+  "license": "MIT",
+  "keywords": [
+    "yii2",
+    "eav",
+    "attribute",
+    "cck",
+    "fields"
+  ],
+  "type": "yii2-extension",
+  "authors": [
+    {
+      "name": "blacksesion",
+      "email": "blacksesion@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=5.5.0",
+    "yiisoft/yii2": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "blacksesion\\eav\\": "./src"
+    }
+  }
+}

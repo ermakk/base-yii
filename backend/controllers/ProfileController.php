@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use dektrium\user\models\User;
+use Yii;
 use yii\filters\AccessControl;
 
 class ProfileController extends \yii\web\Controller

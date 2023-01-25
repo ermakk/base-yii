@@ -29,13 +29,14 @@ $this->registerJsFile($publishedRes[1].'/control_sidebar.js', ['depends' => '\ha
 <?php $this->beginBody() ?>
 
 <div class="wrapper">
-    <!-- Navbar -->
-    <?= $this->render('navbar', ['assetDir' => $assetDir]) ?>
-    <!-- /.navbar -->
+    <?php if(!Yii::$app->user->isGuest && Yii::$app->user->can('admin')){?>
+        <!-- Navbar -->
+        <?= $this->render('navbar', ['assetDir' => $assetDir]) ?>
+        <!-- /.navbar -->
 
-    <!-- Main Sidebar Container -->
-    <?= $this->render('sidebar', ['assetDir' => $assetDir]) ?>
-
+        <!-- Main Sidebar Container -->
+        <?= $this->render('sidebar', ['assetDir' => $assetDir]) ?>
+    <?php }?>
     <!-- Content Wrapper. Contains page content -->
     <?= $this->render('content', ['content' => $content, 'assetDir' => $assetDir]) ?>
     <!-- /.content-wrapper -->

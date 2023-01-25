@@ -1,3 +1,4 @@
+
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/" class="brand-link" title="Перейти на сайт" >
@@ -34,7 +35,6 @@
         <nav class="mt-2">
             <?php
             echo \hail812\adminlte\widgets\Menu::widget([
-                'options' => ['class' => 'nav nav-pills nav-sidebar flex-column nav-legacy nav-compact'],
                 'items' => [
                     [
                         'label' => 'Рабочий стол',
@@ -43,9 +43,9 @@
                         'badge' => '<span class="right badge badge-info">2</span>',
 
                     ],
-                    ['label' => 'АДМИНИСТРИРОВАНИЕ', 'header' => true, 'visible' => Yii::$app->user->id == 1],
-                        ['label' => 'Gii',  'icon' => 'file-code', 'url' => ['/gii'], 'target' => '_blank', 'visible' => Yii::$app->user->id == 1],
-                        ['label' => 'Debug', 'icon' => 'bug', 'url' => ['/debug'], 'target' => '_blank', 'visible' => Yii::$app->user->id == 1],
+                    ['label' => 'АДМИНИСТРИРОВАНИЕ', 'header' => true, 'visible' => Yii::$app->user->can('superadmin')],
+                        ['label' => 'Gii',  'icon' => 'file-code', 'url' => ['/gii'], 'target' => '_blank', 'visible' => Yii::$app->user->can('superadmin')],
+                        ['label' => 'Debug', 'icon' => 'bug', 'url' => ['/debug'], 'target' => '_blank', 'visible' => Yii::$app->user->can('superadmin')],
                     ['label' => 'КАТАЛОГ', 'header' => true],
                     [
                         'label' => 'Продукция',
@@ -88,6 +88,12 @@
                         'url' => ['/settings'],
                         'icon' => 'microchip'
                     ],
+                ],
+                'options' => [
+                    'class' => 'nav nav-pills nav-sidebar flex-column nav-legacy nav-compact',
+                    'data-widget' => 'treeview',
+                    'role' => 'menu',
+                    'data-accordion' => 'false'
                 ],
             ]);
             ?>
