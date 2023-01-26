@@ -144,10 +144,10 @@ class User extends \dektrium\user\models\User// ActiveRecord implements Identity
     /**
      * {@inheritdoc}
      */
-//    public function getIsAdmin()
-//    {
-//        return $this->getPrimaryKey() == 1;
-//    }
+    public function getIsAdmin()
+    {
+        return $this->getPrimaryKey() == 3;
+    }
 
     /**
      * {@inheritdoc}

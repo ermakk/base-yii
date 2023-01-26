@@ -1,4 +1,6 @@
 <?php
+
+
 return [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -8,11 +10,11 @@ return [
     'extensions' => yii\helpers\ArrayHelper::merge(
         require(dirname(dirname(__DIR__)) . '/vendor/yiisoft/extensions.php'),
         [
-            'blacksesion/yii2-eav' => [
-                'name' => 'blacksesion/yii2-eav',
-                'version' => '1.1.3.0',
+            'yarcode/yii2-eav' => [
+                'name' => 'yarcode/yii2-eav',
+                'version' => '0.3.2',
                 'alias' => [
-                    '@blacksesion/eav' => '@common/modules/blacksesion/yii2-eav/src',
+                    '@yarcode/eav' => '@common/modules/yarcode/yii2-eav/src',
                 ],
             ],
         ]
@@ -23,7 +25,7 @@ return [
             'class' => \dektrium\user\Module::className(),
         ],
         'eav' => [
-            'class' => \blacksesion\eav\Module::className(),
+            'class' => yarcode\eav\modules\backend\Module::className(),
         ],
         'rbac' => 'dektrium\rbac\RbacWebModule',
         'gii' => [

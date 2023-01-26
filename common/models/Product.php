@@ -2,10 +2,9 @@
 
 namespace common\models;
 
-use blacksesion\eav\EavBehavior;
-use blacksesion\eav\models\EavAttribute;
-use blacksesion\eav\models\EavAttributeValue;
 use ermakk\changelog\models\ActiveRecord;
+//use yarcode\eav\models\Attribute;
+//use yarcode\eav\models\AttributeValue;
 use Yii;
 
 /**
@@ -69,67 +68,81 @@ class Product extends ActiveRecord
     public function behaviors()
     {
         return [
-            'eav' => [
-                'class' => EavBehavior::className(),
-                'valueClass' => EavAttributeValue::className(),
-            ]
+            [
+                'class' => \yarcode\eav\EavBehavior::className(),
+                'valueClass' => ObjectAttributeValue::className(),
+            ],
+//            'eav' => [
+//                'class' => EavBehavior::className(),
+//                'valueClass' => EavAttributeValue::className(),
+//            ]
         ];
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return yii\db\ActiveQuery
      */
     public function getEavAttributes()
     {
-        return EavAttribute::find()
-            ->joinWith('entity')
-            ->where([
-                'eav_entity.categoryId' => $this->category_id,
-                'eav_entity.entityModel' => $this::className()
-            ]);
+        $query = ObjectAttribute::find()->where(['categoryId' => $this->category_id]);
+        $query->multiple = true;
+        return $query;
     }
-    /**
-     * @return \yii\db\ActiveQuery
-     */
 
-    public function renderEavAttr($attr, $model = NULL)
-    {
-        $optionValues = $model[$attr->name]->value; // Список выбранных значений
-        $allOptionValues = $attr->getEavOptions()->asArray()->all(); // Список всех возможных значений
-
-        // Если массив - все возможные значения
-        unset($out);
-        if (is_array($allOptionValues)) {
-            $out = [];
-            foreach ($allOptionValues as $allOtionValuesItem) {
-                // Если список доступных значений - массив
-                if (is_array($optionValues)) {
-                    foreach ($optionValues as $optionValuesItem) {
-                        if ($optionValuesItem == $allOtionValuesItem["id"]) {
-                            $out[] = $allOtionValuesItem;
-                        }
-                    }
-                } else {
-                    if ($optionValues == $allOtionValuesItem["id"]) {
-                        $out[] = $allOtionValuesItem;
-                    }
-                }
-            }
-
-
-        }
-
-        if ($out) {
-            return $out;
-        } else return [0 => [
-            'id' => 0,
-            'attributeId' => 0,
-            'value' => $model[$attr->name]['value'],
-            'defaultOptionId' => 0,
-            'order' => 0,
-
-        ]];
-    }
+//    /**
+//     * @return \yii\db\ActiveQuery
+//     */
+//    public function getEavAttributes()
+//    {
+//        return EavAttribute::find()
+//            ->joinWith('entity')
+//            ->where([
+//                'eav_entity.categoryId' => $this->category_id,
+//                'eav_entity.entityModel' => $this::className()
+//            ]);
+//    }
+//    /**
+//     * @return \yii\db\ActiveQuery
+//     */
+//
+//    public function renderEavAttr($attr, $model = NULL)
+//    {
+//        $optionValues = $model[$attr->name]->value; // Список выбранных значений
+//        $allOptionValues = $attr->getEavOptions()->asArray()->all(); // Список всех возможных значений
+//
+//        // Если массив - все возможные значения
+//        unset($out);
+//        if (is_array($allOptionValues)) {
+//            $out = [];
+//            foreach ($allOptionValues as $allOtionValuesItem) {
+//                // Если список доступных значений - массив
+//                if (is_array($optionValues)) {
+//                    foreach ($optionValues as $optionValuesItem) {
+//                        if ($optionValuesItem == $allOtionValuesItem["id"]) {
+//                            $out[] = $allOtionValuesItem;
+//                        }
+//                    }
+//                } else {
+//                    if ($optionValues == $allOtionValuesItem["id"]) {
+//                        $out[] = $allOtionValuesItem;
+//                    }
+//                }
+//            }
+//
+//
+//        }
+//
+//        if ($out) {
+//            return $out;
+//        } else return [0 => [
+//            'id' => 0,
+//            'attributeId' => 0,
+//            'value' => $model[$attr->name]['value'],
+//            'defaultOptionId' => 0,
+//            'order' => 0,
+//
+//        ]];
+//    }
 
     /**
      * Gets query for [[Category]].
@@ -189,4 +202,6 @@ class Product extends ActiveRecord
     {
         return new ProductQuery(get_called_class());
     }
+
+
 }

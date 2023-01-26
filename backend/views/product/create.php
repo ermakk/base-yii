@@ -13,8 +13,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+    <?php
+       if(isset($eav) && $eav !== null) {
+           echo $this->render('_form', [
+
+               'model' => $model,
+               'eav' => $eav
+           ]);
+       } else {
+           echo $this->render('_form', [
+               'model' => $model,
+           ]);
+       }
+    ?>
 
 </div>
