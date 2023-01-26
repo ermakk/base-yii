@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
-        'columns' => array_merge($searchModel->getEavAttributes()->asArray()->all(),[
+        'columns' => [
 //            ['class' => 'yii\grid\SerialColumn'],
 
             'id',
@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ]
-        ]),
+        ],
     ]); ?>
 
     <?php Pjax::end(); ?>

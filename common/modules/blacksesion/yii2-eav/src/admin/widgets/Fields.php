@@ -68,7 +68,6 @@ class Fields extends Widget
             ];
 
         }
-
         $this->bootstrapData = Json::encode($this->bootstrapData);
     }
 

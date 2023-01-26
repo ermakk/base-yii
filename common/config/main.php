@@ -15,9 +15,16 @@ return [
                     '@blacksesion/eav' => '@common/modules/blacksesion/yii2-eav/src',
                 ],
             ],
+            'yarcode/yii2-eav' => [
+                'name' => 'yarcode/yii2-eav',
+                'version' => '0.3.2',
+                'alias' => [
+                    '@yarcode/eav' => '@common/modules/yarcode/yii2-eav/src',
+                ],
+            ],
         ]
     ),
-
+    'language' => 'RU-ru',
     'modules' => [
         'user' => [
             'class' => \dektrium\user\Module::className(),

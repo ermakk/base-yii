@@ -65,6 +65,7 @@
                         ]
                     ],
                     ['label' => 'Категории', 'url' => ['/product-category']],
+                    ['label' => 'Динамические аттрибуты', 'url' => ['/eav'], 'visible' => Yii::$app->user->can('superadmin')],
                     ['label' => 'Типы', 'url' => ['/product-type']],
                     ['label' => 'ГЛАВНАЯ СТРАНИЦА', 'header' => true],
                         ['label' => 'Слайдер', 'url' => ['/main-page/slider']],

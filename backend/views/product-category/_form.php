@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Product;
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\helpers\Url;

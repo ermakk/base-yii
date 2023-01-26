@@ -5,6 +5,7 @@ namespace backend\controllers;
 use common\models\ProductCategory;
 use common\models\ProductCategorySearch;
 use dektrium\user\filters\AccessRule;
+use Yii;
 use yii\base\Theme;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
@@ -116,10 +117,10 @@ class ProductCategoryController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
+
 
         $data_category = ArrayHelper::map((new ProductCategory())::find()->select(['title', 'id'])->all(), 'id', 'title');
         return $this->render('update', [

@@ -153,6 +153,10 @@ class AjaxController extends Controller
                         $rule->required = isset($field['field_options']['required'])? (int)$field['field_options']['required']: 0;
                         $rule->visible = isset($field['field_options']['visible'])? (int)$field['field_options']['visible']: 0;
                         $rule->locked = isset($field['field_options']['locked'])? (int)$field['field_options']['locked']: 0;
+                        echo '<pre>';
+                        var_dump($rule);
+                        echo '</pre>'; die;
+
                         $rule->save();
 
                     }

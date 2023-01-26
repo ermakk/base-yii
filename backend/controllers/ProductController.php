@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\Product;
 use common\models\ProductSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -97,8 +98,25 @@ class ProductController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+
+
+        $eav = $model->getEavModel();
+
+        if ($eav->load(Yii::$app->request->post()) && $eav->validate()) {
+            $dbTransaction = Yii::$app->db->beginTransaction();
+            try {
+                $eav->save(false);
+                $dbTransaction->commit();
+            } catch (\Exception $e) {
+                $dbTransaction->rollBack();
+                throw $e;
+            }
+            return $this->redirect(['index']);
+        }
+
         return $this->render('update', [
             'model' => $model,
+            'eav' => $eav
         ]);
     }
 
