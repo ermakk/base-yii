@@ -40,12 +40,18 @@ class ProductCategoryController extends Controller
                     'rules' => [
                         [
                             'allow' => true,
-                            'actions' => ['index', 'update', 'view'],
-                            'roles' => ['@'],
+                            'actions' => ['index', 'update', 'view', 'create'],
+                            'roles' => ['superadmin', 'admin'],
                         ],
                         [
                             'allow' => true,
-                            'roles' => ['admin'],
+                            'actions' => ['index', 'view'],
+                            'roles' => ['moderator'],
+                        ],
+                        [
+                            'allow' => true,
+                            'actions' => ['index'],
+                            'roles' => ['@'],
                         ],
                     ],
                 ],
@@ -62,6 +68,9 @@ class ProductCategoryController extends Controller
     {
             $searchModel = new ProductCategorySearch();
             $dataProvider = $searchModel->search($this->request->queryParams);
+            $dataProvider->setSort([
+                'defaultOrder' => ['parent_id' => SORT_ASC],
+            ]);
 
             return $this->render('index', [
                 'searchModel' => $searchModel,

@@ -17,13 +17,6 @@ return [
                     '@yarcode/eav' => '@common/modules/yarcode/yii2-eav/src',
                 ],
             ],
-            'yarcode/yii2-eav' => [
-                'name' => 'yarcode/yii2-eav',
-                'version' => '0.3.2',
-                'alias' => [
-                    '@yarcode/eav' => '@common/modules/yarcode/yii2-eav/src',
-                ],
-            ],
         ]
     ),
     'language' => 'RU-ru',
@@ -32,7 +25,7 @@ return [
             'class' => \dektrium\user\Module::className(),
         ],
         'eav' => [
-            'class' => yarcode\eav\modules\backend\Module::className(),
+            'class' => \yarcode\eav\modules\backend\Module::class,
         ],
         'rbac' => 'dektrium\rbac\RbacWebModule',
         'gii' => [

@@ -4,6 +4,7 @@ use yii\helpers\Html;
 
 /** @var yii\web\View $this */
 /** @var common\models\Product $model */
+/** @var \yarcode\eav\DynamicModel $eav */
 
 $this->title = 'Update Product: ' . $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Products', 'url' => ['index']];

@@ -21,15 +21,18 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'text')->textInput(['maxlength' => true]) ?>
 
-    <?= $model->category_id == null ? $form->field($model, 'category_id')->textInput() : '' ?>
+    <?= !isset($model->category_id) || isset($model->id) ? $form->field($model, 'category_id')->textInput() : '' ?>
 
     <?= $form->field($model, 'type_id')->textInput() ?>
 
     <?php
         if (isset($eav) && $eav !== null) {
             $eav->activeForm = $form;
-            foreach ($eav->handlers as $handler) {
-                echo $handler->run();
+//            var_dump($eav->handlers); die;
+            if ($eav->handlers !== null) {
+                foreach ($eav->handlers as $handler) {
+                    echo $handler->run();
+                }
             }
         }
     ?>

@@ -2,6 +2,7 @@
 
 use common\models\ProductCategory;
 use kartik\select2\Select2;
+use yii\grid\DataColumn;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -61,6 +62,18 @@ $this->params['breadcrumbs'][] = $this->title;
                         'allowClear' => true,
                     ],
                 ]),
+            ],
+            [
+                'label' => 'Товары',
+                'class' => DataColumn::class,
+                'format' => 'raw',
+                'value' => function(ProductCategory $model){
+                    return Html::a('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 50 50" width="20" height="20">
+<circle style="fill:#43B05C;" cx="25" cy="25" r="25"/>
+<line style="fill:none;stroke:#FFFFFF;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="25" y1="13" x2="25" y2="38"/>
+<line style="fill:none;stroke:#FFFFFF;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="37.5" y1="25" x2="12.5" y2="25"/>
+</svg>', ['/product/create', 'category_id' => $model->id]);
+                },
             ],
             [
                 'class' => ActionColumn::className(),

@@ -140,7 +140,6 @@ class ProductController extends Controller
 //            return $this->redirect(['view', 'id' => $model->id]);
 //        }
         $eav = $model->getEavModel(); /** @var DynamicModel $eav **/
-//        var_dump($model->dynamicModel); die();
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             if ($eav->load(Yii::$app->request->post()) && $eav->validate()) {
                 $dbTransaction = Yii::$app->db->beginTransaction();
@@ -157,6 +156,7 @@ class ProductController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+//        var_dump($eav); die();
 
 
         return $this->render('update', [

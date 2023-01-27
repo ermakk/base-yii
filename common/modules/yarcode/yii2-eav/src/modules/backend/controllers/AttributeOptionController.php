@@ -61,6 +61,17 @@ class AttributeOptionController extends Controller
         $model->attributeId = $attribute->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $attribute = $this->findAttributeModel($attributeId);
+
+            $dataProvider = new ActiveDataProvider([
+                'query' => $attribute->getOptions(),
+            ]);
+
+            return $this->render('index', [
+                'attribute' => $attribute,
+                'dataProvider' => $dataProvider,
+                'entityName' => $this->getEntityName(),
+            ]);
             return $this->goBack();
         }
 

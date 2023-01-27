@@ -5,6 +5,7 @@
 
 namespace yarcode\eav;
 
+use common\models\Product;
 use yarcode\eav\models\Attribute;
 use Yii;
 use yii\base\DynamicModel as BaseDynamicModel;
@@ -19,7 +20,7 @@ class DynamicModel extends BaseDynamicModel
 {
     /** @var string Class to use for storing data */
     public $valueClass;
-    /** @var ActiveRecord */
+    /** @var Product */
     public $entityModel;
     /** @var AttributeHandler[] */
     public $handlers;
@@ -45,8 +46,10 @@ class DynamicModel extends BaseDynamicModel
         $params['class'] = static::className();
         /** @var self $model */
         $model = Yii::createObject($params);
+//        var_dump($model->entityModel->getRelation($model->behavior->relationName)->all()); die;
         foreach ($model->entityModel->getRelation($model->behavior->relationName)->all() as $attribute /** @var Attribute $attribute */) {
-            if($attribute->attributes['categoryId'] == $model->entityModel->attributes['category_id']) {//если категория в атрибуте и в модели совпадает
+//            if($attribute->attributes['categoryId'] == $model->entityModel->attributes['category_id']) {//если категория в атрибуте и в модели совпадает
+            if($model->entityModel->checkCategory($attribute->attributes['categoryId'])) {//если категория в атрибуте и в модели совпадает
                 $handler = AttributeHandler::load($model, $attribute);
                 $key = $handler->getAttributeName();
 

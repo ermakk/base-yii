@@ -84,7 +84,9 @@ class Product extends ActiveRecord
      */
     public function getEavAttributes()
     {
-        $query = ObjectAttribute::find()->where(['categoryId' => $this->category_id]);
+//        $query = ObjectAttribute::find()->where(['categoryId' => $this->category_id]);
+        $query = $this->hasMany(ObjectAttribute::className(), ['categoryId' => 'parentCategoryList']);
+//        var_dump($query); die;
         $query->multiple = true;
         return $query;
     }
@@ -152,6 +154,32 @@ class Product extends ActiveRecord
     public function getCategory()
     {
         return $this->hasOne(ProductCategory::class, ['id' => 'category_id']);
+    }
+
+    /**
+     * Функция возвращает массив идентификаторов категорий от текущей до родительской
+     *
+     * @return int[]|null[]
+     */
+    public function getParentCategoryList(){
+        $parent_category = $this->category->hasOne(ProductCategory::class, ['id' => 'parent_id'])->one(); /** @var ProductCategory $parent_category **/
+        $res = [$this->category_id];
+        while ($parent_category !== null){
+            $res[] = $parent_category->id;
+            $parent_category = $parent_category->parent;
+        }
+//        var_dump($res); die;
+        return $res;
+    }
+    /**
+     * Проверяет является ли идентифкатор категории наследственным
+     * Gets query for [[Category]].
+     *
+     * @return \yii\db\ActiveQuery|ProductCategoryQuery
+     */
+    public function checkCategory($category_id)
+    {
+        return $this->hasOne(ProductCategory::class, ['in', 'id', $this->getParentCategoryList()]);
     }
 
     /**
