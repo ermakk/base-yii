@@ -5,6 +5,7 @@
 namespace yarcode\eav\modules\backend\controllers;
 
 use common\models\ObjectAttribute;
+use common\models\ObjectAttributeOption;
 use common\models\ProductCategory;
 use yarcode\eav\models\Attribute;
 use yarcode\eav\modules\backend\Controller;
@@ -48,6 +49,10 @@ class AttributeController extends Controller
 
         $categoryList = ProductCategory::find()->all();
 
+        $category_id = $this->request->get('category_id');
+        if (isset($category_id) && $category_id !== null) {
+            $model->categoryId = $category_id;
+        }
         return $this->render('create', [
             'model' => $model,
             'entityName' => $this->getEntityName(),
@@ -96,7 +101,9 @@ class AttributeController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if(ObjectAttributeOption::deleteAll(['attributeId' => $id])) {
+            $this->findModel($id)->delete();
+        }
         return $this->redirect(['index']);
     }
 }

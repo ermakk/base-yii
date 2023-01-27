@@ -7,6 +7,8 @@ use common\models\Product;
 use common\models\ProductSearch;
 use yarcode\eav\DynamicModel;
 use Yii;
+use yii\base\Model;
+use yii\helpers\BaseInflector;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -94,18 +96,24 @@ class ProductController extends Controller
         ];
         if($category_id !== null ){
             $eav = $model->getEavModel(); /** @var DynamicModel $eav **/
-//        var_dump($model->dynamicModel); die();
-            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-                if ($eav->load(Yii::$app->request->post()) && $eav->validate()) {
-                    $dbTransaction = Yii::$app->db->beginTransaction();
-                    try {
-                        $eav->save(false);
-                        $dbTransaction->commit();
-                    } catch (\Exception $e) {
-                        $dbTransaction->rollBack();
-                        throw $e;
+            if ($this->request->isPost && $model->load($this->request->post())){
+
+                if ($model->code == '') {
+                    $model->code = BaseInflector::slug($model->title);
+                }
+//                var_dump(BaseInflector::slug($model->title)); die();
+                if($model->save()) {
+                    if ($eav->load(Yii::$app->request->post()) && $eav->validate()) {
+                        $dbTransaction = Yii::$app->db->beginTransaction();
+                        try {
+                            $eav->save(false);
+                            $dbTransaction->commit();
+                        } catch (\Exception $e) {
+                            $dbTransaction->rollBack();
+                            throw $e;
+                        }
+                        return $this->redirect(['index']);
                     }
-                    return $this->redirect(['index']);
                 }
 
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -174,7 +182,9 @@ class ProductController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if(ObjectAttributeValue::deleteAll(['entityId' => $id])) {
+            $this->findModel($id)->delete();
+        }
 
         return $this->redirect(['index']);
     }

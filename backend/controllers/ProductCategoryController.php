@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use common\models\ObjectAttribute;
+use common\models\Product;
 use common\models\ProductCategory;
 use common\models\ProductCategorySearch;
 use dektrium\user\filters\AccessRule;
@@ -40,7 +42,7 @@ class ProductCategoryController extends Controller
                     'rules' => [
                         [
                             'allow' => true,
-                            'actions' => ['index', 'update', 'view', 'create'],
+                            'actions' => ['index', 'update', 'view', 'create', 'delete'],
                             'roles' => ['superadmin', 'admin'],
                         ],
                         [
@@ -147,6 +149,23 @@ class ProductCategoryController extends Controller
      */
     public function actionDelete($id)
     {
+        if(ObjectAttribute::findAll(['categoryId' => $id]) || Product::findAll(['category_id' => $id]) || ProductCategory::findAll(['parent_id' => $id])){
+            \Yii::$app->getSession()->setFlash('error','Невозможно удалить категорию, с которой связаны другие данные');
+        } else {
+            $this->findModel($id)->delete();
+        }
+        return $this->redirect(['index']);
+    }
+    /**
+     * Deletes an existing ProductCategory model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param int $id Идентификтор
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionStrictDelete($id)
+    {
+
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

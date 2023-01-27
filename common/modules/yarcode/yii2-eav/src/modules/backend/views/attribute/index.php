@@ -21,6 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
         //'filterModel' => $searchModel,
         'layout' => "{items}\n{pager}",
         'columns' => [
+            'category.title:text:Category',
             'name',
             'type.name:text:Type',
             [

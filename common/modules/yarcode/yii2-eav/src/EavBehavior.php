@@ -7,6 +7,7 @@ namespace yarcode\eav;
 
 use yii\base\Behavior;
 use yii\db\ActiveRecord;
+use yii\helpers\BaseInflector;
 
 /**
  * Class EavBehavior
@@ -29,12 +30,12 @@ class EavBehavior extends Behavior
     {
         assert(isset($this->valueClass));
     }
-
     /**
      * @return DynamicModel
      */
     public function getEavModel()
     {
+
         if (!$this->dynamicModel instanceof DynamicModel) {
             $this->dynamicModel = DynamicModel::create([
                 'entityModel' => $this->owner,
