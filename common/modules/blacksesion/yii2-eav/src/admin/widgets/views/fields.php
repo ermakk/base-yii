@@ -9,7 +9,6 @@ use yii\web\View;
  */
 $path = FbAsset::register($this);
 ?>
-
     <div class="form-builder fb-main">
     </div>
 <?php

@@ -4,6 +4,8 @@
  */
 namespace yarcode\eav\modules\backend\controllers;
 
+use common\models\ObjectAttribute;
+use common\models\ProductCategory;
 use yarcode\eav\models\Attribute;
 use yarcode\eav\modules\backend\Controller;
 use Yii;
@@ -22,7 +24,7 @@ class AttributeController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => $this->getQueryInstance('Attribute'),
+            'query' => $this->getQueryInstance('ObjectAttribute'),
         ]);
 
         return $this->render('index', [
@@ -36,18 +38,21 @@ class AttributeController extends Controller
      */
     public function actionCreate()
     {
-        /** @var Attribute $model */
-        $model = $this->getModelInstance('Attribute');
+        /** @var ObjectAttribute $model */
+        $model = $this->getModelInstance('ObjectAttribute');
         $model->required = true;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
 
+        $categoryList = ProductCategory::find()->all();
+
         return $this->render('create', [
             'model' => $model,
             'entityName' => $this->getEntityName(),
-            'typesQuery' => $this->getQueryInstance('AttributeType'),
+            'typesQuery' => $this->getQueryInstance('ObjectAttributeType'),
+            'categoryList' => $categoryList,
         ]);
     }
 
@@ -62,21 +67,23 @@ class AttributeController extends Controller
             return $this->redirect(['index']);
         }
 
+        $categoryList = ProductCategory::find()->all();
         return $this->render('update', [
             'model' => $model,
             'entityName' => $this->getEntityName(),
-            'typesQuery' => $this->getQueryInstance('AttributeType'),
+            'typesQuery' => $this->getQueryInstance('ObjectAttributeType'),
+            'categoryList' => $categoryList,
         ]);
     }
 
     /**
      * @param integer $id
-     * @return Attribute the loaded model
+     * @return ObjectAttribute the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        $model = $this->getQueryInstance('Attribute')->where(['id' => $id])->one();
+        $model = $this->getQueryInstance('ObjectAttribute')->where(['id' => $id])->one();
         if (!$model) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }

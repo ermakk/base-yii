@@ -2,8 +2,10 @@
 
 namespace backend\controllers;
 
+use common\models\ObjectAttributeValue;
 use common\models\Product;
 use common\models\ProductSearch;
+use yarcode\eav\DynamicModel;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -56,8 +58,25 @@ class ProductController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $eav = $model->getEavModel(); /** @var DynamicModel $eav **/
+
+//        $eav_attr = array_combine($eav->attributeLabels(), $eav->attributes);
+        $eav_attr = [];
+        foreach ($eav->attributeLabels() as $key => $attributeLabel){
+            $eav_attr[] = [
+                'attribute' => $key,
+                'label' => $attributeLabel,
+                'value' => ObjectAttributeValue::findOne(['entityId' => $id, 'attributeId' => $key])->val
+
+            ];
+        }
+
+//        var_dump(\yii\helpers\ArrayHelper::map($eav_attr, 'label','value'));
+//        die;
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'eav_attr' => $eav_attr,
         ]);
     }
 
@@ -66,21 +85,44 @@ class ProductController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
+    public function actionCreate($category_id = null)
     {
         $model = new Product();
+        $model->category_id = $category_id;
+        $params = [
+            'model' => $model,
+        ];
+        if($category_id !== null ){
+            $eav = $model->getEavModel(); /** @var DynamicModel $eav **/
+//        var_dump($model->dynamicModel); die();
+            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                if ($eav->load(Yii::$app->request->post()) && $eav->validate()) {
+                    $dbTransaction = Yii::$app->db->beginTransaction();
+                    try {
+                        $eav->save(false);
+                        $dbTransaction->commit();
+                    } catch (\Exception $e) {
+                        $dbTransaction->rollBack();
+                        throw $e;
+                    }
+                    return $this->redirect(['index']);
+                }
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
-        } else {
-            $model->loadDefaultValues();
-        }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+            $params['eav'] = $eav;
+        } else {
+
+            if ($this->request->isPost) {
+                if ($model->load($this->request->post()) && $model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            } else {
+                $model->loadDefaultValues();
+            }
+        }
+        return $this->render('create', $params);
     }
 
     /**
@@ -94,25 +136,28 @@ class ProductController extends Controller
     {
         $model = $this->findModel($id);
 
+//        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+//            return $this->redirect(['view', 'id' => $model->id]);
+//        }
+        $eav = $model->getEavModel(); /** @var DynamicModel $eav **/
+//        var_dump($model->dynamicModel); die();
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            if ($eav->load(Yii::$app->request->post()) && $eav->validate()) {
+                $dbTransaction = Yii::$app->db->beginTransaction();
+                try {
+                    $eav->save(false);
+                    $dbTransaction->commit();
+                } catch (\Exception $e) {
+                    $dbTransaction->rollBack();
+                    throw $e;
+                }
+                return $this->redirect(['index']);
+            }
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
 
-
-        $eav = $model->getEavModel();
-
-        if ($eav->load(Yii::$app->request->post()) && $eav->validate()) {
-            $dbTransaction = Yii::$app->db->beginTransaction();
-            try {
-                $eav->save(false);
-                $dbTransaction->commit();
-            } catch (\Exception $e) {
-                $dbTransaction->rollBack();
-                throw $e;
-            }
-            return $this->redirect(['index']);
-        }
 
         return $this->render('update', [
             'model' => $model,

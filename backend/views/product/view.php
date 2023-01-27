@@ -5,6 +5,7 @@ use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
 /** @var common\models\Product $model */
+/** @var array $eav_attr */
 
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Products', 'url' => ['index']];
@@ -25,7 +26,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-
     <?= DetailView::widget([
         'model' => $model,
         'attributes' =>  array_merge(
@@ -38,7 +38,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'category_id',
                 'type_id',
             ],
-            \yii\helpers\ArrayHelper::map($model->getEavAttributes()->all(), 'name','name')
+//            \yii\helpers\ArrayHelper::map($eav_attr, 'label','value')
+            $eav_attr
         ),
     ]) ?>
 

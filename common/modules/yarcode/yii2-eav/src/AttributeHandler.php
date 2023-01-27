@@ -5,6 +5,7 @@
 
 namespace yarcode\eav;
 
+use yarcode\eav\inputs\TextInput;
 use yarcode\eav\models\Attribute;
 use Yii;
 use yii\base\InvalidParamException;
@@ -34,6 +35,8 @@ abstract class AttributeHandler extends Widget
      */
     public static function load($owner, $attributeModel)
     {
+
+
         if (!class_exists($class = $attributeModel->type->handlerClass))
             throw new InvalidParamException('Unknown handler class: ' . $class);
 
@@ -42,6 +45,7 @@ abstract class AttributeHandler extends Widget
             'owner' => $owner,
             'attributeModel' => $attributeModel
         ]);
+
         $handler->init();
 
         return $handler;
@@ -72,6 +76,7 @@ abstract class AttributeHandler extends Widget
     public function getOptions()
     {
         $result = [];
+
         foreach ($this->attributeModel->options as $option)
             $result[] = $option->getPrimaryKey();
         return $result;

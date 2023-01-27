@@ -12,6 +12,7 @@ use yii\helpers\ArrayHelper;
 ?>
 <div class="eav-attribute-form">
     <?php $form = ActiveForm::begin(); ?>
+    <?= $form->field($model, 'categoryId')->dropDownList(ArrayHelper::map($categoryList, 'id', 'title')) ?>
     <?= $form->field($model, 'typeId')->dropDownList(ArrayHelper::map($typesQuery->all(), 'id', 'name')) ?>
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'required')->checkbox() ?>

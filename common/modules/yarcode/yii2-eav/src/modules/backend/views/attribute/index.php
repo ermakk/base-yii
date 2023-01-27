@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'title' => 'Edit attribute options',
                             'data-pjax' => '0',
                         ];
-                        return Html::a('<span class="glyphicon glyphicon-list-alt"></span>',
+                        return Html::a('Опции <span class="glyphicon glyphicon-pencil"></span>',
                             ['attribute-option/index', 'attributeId' => $model->id], $options);
                     }
                 ]

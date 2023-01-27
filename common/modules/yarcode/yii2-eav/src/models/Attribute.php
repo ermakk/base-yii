@@ -75,6 +75,7 @@ abstract class Attribute extends StorageModel
      */
     public function getOptions()
     {
+//        var_dump($this->getAdjacentClass(self::CLASS_ATTRIBUTE_OPTION)); die;
         return $this->hasMany($this->getAdjacentClass(self::CLASS_ATTRIBUTE_OPTION), ['attributeId' => 'id']);
     }
 }

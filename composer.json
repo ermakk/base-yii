@@ -16,7 +16,7 @@
     "autoload": {
         "psr-4": {
             "blacksesion\\eav\\":  "common/modules/blacksesion/yii2-eav/src",
-            "yarcode\\yii2-eav\\": "common/modules/yarcode/yii2-eav/src"
+            "yarcode\\eav\\": "common/modules/yarcode/yii2-eav/src"
         }
     },
     "require": {

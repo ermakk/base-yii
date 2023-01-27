@@ -16,5 +16,6 @@ $this->params['breadcrumbs'][] = 'Create';
     <?= $this->render('_form', [
         'model' => $model,
         'typesQuery' => $typesQuery,
+        'categoryList' => $categoryList,
     ]) ?>
 </div>

@@ -11,7 +11,7 @@ namespace yarcode\eav\modules\backend;
 class Module extends \yii\base\Module
 {
     public $entityName = 'Sample Entity';
-    public $modelsNamespace = 'common\models\sample_eav';
+    public $modelsNamespace = 'common\models';
 
     public $defaultRoute = 'attribute';
     public $controllerNamespace = 'yarcode\eav\modules\backend\controllers';

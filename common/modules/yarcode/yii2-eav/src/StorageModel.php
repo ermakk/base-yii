@@ -9,17 +9,16 @@ use yii\db\ActiveRecord;
 
 abstract class StorageModel extends ActiveRecord
 {
-    const CLASS_ATTRIBUTE = 'Attribute';
-    const CLASS_ATTRIBUTE_TYPE = 'AttributeType';
-    const CLASS_ATTRIBUTE_OPTION = 'AttributeOption';
-    const CLASS_ATTRIBUTE_VALUE = 'AttributeValue';
+    const CLASS_ATTRIBUTE = 'ObjectAttribute';
+    const CLASS_ATTRIBUTE_TYPE = 'ObjectAttributeType';
+    const CLASS_ATTRIBUTE_OPTION = 'ObjectAttributeOption';
+    const CLASS_ATTRIBUTE_VALUE = 'ObjectAttributeValue';
 
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'object';
         throw new InvalidConfigException('Please override this method in class' . get_called_class());
     }
 

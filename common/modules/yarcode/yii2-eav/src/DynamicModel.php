@@ -29,7 +29,7 @@ class DynamicModel extends BaseDynamicModel
     private $attributeLabels = [];
     /** @var string  */
 
-    public $fieldPrefix = 'eav';
+    public $fieldPrefix = '';//'eav';
 
     /** @var EavBehavior link to the parent behavior instance */
     public $behavior;
@@ -45,30 +45,29 @@ class DynamicModel extends BaseDynamicModel
         $params['class'] = static::className();
         /** @var self $model */
         $model = Yii::createObject($params);
-
         foreach ($model->entityModel->getRelation($model->behavior->relationName)->all() as $attribute /** @var Attribute $attribute */) {
-            $handler = AttributeHandler::load($model, $attribute);
+            if($attribute->attributes['categoryId'] == $model->entityModel->attributes['category_id']) {//если категория в атрибуте и в модели совпадает
+                $handler = AttributeHandler::load($model, $attribute);
+                $key = $handler->getAttributeName();
 
-            $key = $handler->getAttributeName();
+                $model->defineAttribute($key, $handler->valueHandler->load());
+                $model->defineAttributeLabel($key, $attribute->getAttribute('name'));
 
-            $model->defineAttribute($key, $handler->valueHandler->load());
-            $model->defineAttributeLabel($key, $attribute->getAttribute('name'));
+                if ($attribute->required) {
+                    $model->addRule($key, 'required');
+                }
 
-            if ($attribute->required) {
-                $model->addRule($key, 'required');
+                if ($handler->valueHandler instanceof RawValueHandler) {
+                    $model->addRule($key, 'default', ['value' => $attribute->defaultValue]);
+                }
+
+                if ($handler->valueHandler instanceof OptionValueHandler) {
+                    $model->addRule($key, 'default', ['value' => $attribute->defaultOptionId]);
+                }
+
+                $model->handlers[$key] = $handler;
             }
-
-            if ($handler->valueHandler instanceof RawValueHandler) {
-                $model->addRule($key, 'default', ['value' => $attribute->defaultValue]);
-            }
-
-            if ($handler->valueHandler instanceof OptionValueHandler) {
-                $model->addRule($key, 'default', ['value' => $attribute->defaultOptionId]);
-            }
-
-            $model->handlers[$key] = $handler;
         }
-
         return $model;
     }
 
