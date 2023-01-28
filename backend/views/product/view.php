@@ -1,5 +1,7 @@
 <?php
 
+use common\models\Product;
+use yii\grid\DataColumn;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -37,6 +39,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 'text',
                 'category_id',
                 'type_id',
+                [
+                    'label' => 'Изображения',
+                    'class' => DataColumn::class,
+                    'format' => 'raw',
+                    'value' => function(Product $model){
+                        $res = '';
+                        foreach ($model->image_list as $image){
+                            $res .= "<img src='/upload/imgprev/{$image->path}' height='150px' width='auto'>";
+                        }
+                        return $res;
+                    },
+                ],
             ],
 //            \yii\helpers\ArrayHelper::map($eav_attr, 'label','value')
             $eav_attr

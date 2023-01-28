@@ -6,6 +6,8 @@ return [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
+    'name' => 'Touristika',
+    'language' => 'RU-ru',
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'extensions' => yii\helpers\ArrayHelper::merge(
         require(dirname(dirname(__DIR__)) . '/vendor/yiisoft/extensions.php'),
@@ -19,7 +21,6 @@ return [
             ],
         ]
     ),
-    'language' => 'RU-ru',
     'modules' => [
         'user' => [
             'class' => \dektrium\user\Module::className(),
@@ -51,6 +52,14 @@ return [
         ],
     ],
     'components' => [
+        'assetManager' => [
+            'bundles' => [
+                'kartik\form\ActiveFormAsset' => [
+                    'bsVersion' => 4,
+                    'bsDependencyEnabled' => false // do not load bootstrap assets for a specific asset bundle
+                ],
+            ],
+        ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],

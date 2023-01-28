@@ -47,6 +47,9 @@ return [
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
             ],
         ],
+        'authManager' => [
+            'class' => \dektrium\rbac\components\DbManager::className(),
+        ],
 
     ],
     'params' => $params,

@@ -1,7 +1,9 @@
 <?php
 
 use common\models\Product;
+use kartik\file\FileInput;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
@@ -11,17 +13,49 @@ use yii\widgets\ActiveForm;
 
 <div class="product-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'code')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'file[]')->label('Изображения')->widget(FileInput::classname(), [
+        'options' => [
+            'multiple' => true,
+            'accept' => 'image/*'
+        ],
+        'pluginOptions' => [
+            'deleteUrl' => Url::toRoute(['product/delete-image', 'id' => $model->id]), //это урл экшэна.
+            'previewFileType' => 'image' ,
+            'showUpload' => false,
+            'showPreview' => true,
+            'showCaption' => false,
+            'showRemove' => false,
+            'language' => 'ru',
+            'initialPreview'=>  array_column($model->imageList, 'path'),
+            'initialPreviewConfig' => $model->imageList,
+            'overwriteInitial' => false,
+//            'uploadToken' => Yii::$app->request->getCsrfToken(),
+            'initialPreviewAsData'=>true,
+            'maxFileCount' => 10
+        ],
+        'pluginEvents' => [
+            "fileremove" => "function() { console.log(\"fileclear\"); }",
+        ],
 
+    ]);?>
+    <?= $form->field($model, 'title')->textInput(['maxlength' => true])->label($model->getAttributeLabel('title'). '  
+        <span  class="" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="cursor: pointer">
+            &nbsp;(Заполнить поле CODE?)
+        </span>') ?>
+
+    <div class="card card-body">
+        <div class="collapse" id="collapseExample">
+            <?= $form->field($model, 'code')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>
     <?= $form->field($model, 'artikul')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'text')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'text')->textarea() ?>
 
-    <?= !isset($model->category_id) || isset($model->id) ? $form->field($model, 'category_id')->textInput() : '' ?>
+    <?= !isset($model->category_id) || isset($model->id) ? $form->field($model, 'category_id')->dropDownList(\yii\helpers\ArrayHelper::map($categoryList, 'id', 'title')) : '' ?>
 
     <?= $form->field($model, 'type_id')->textInput() ?>
 

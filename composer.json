@@ -22,7 +22,7 @@
     "require": {
         "php": ">=5.6.0",
         "yiisoft/yii2": "~2.0.14",
-        "yiisoft/yii2-bootstrap4": "~2.0.0",
+        "yiisoft/yii2-bootstrap4": "^2.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
         "mdmsoft/yii2-admin": "^3.2",
         "dektrium/yii2-user": "^0.9.14",
@@ -33,11 +33,12 @@
         "kartik-v/yii2-widget-datetimepicker": "^1.5",
         "kartik-v/yii2-widget-colorinput": "^1.0",
         "kartik-v/yii2-widget-activeform": "^1.6",
-        "kartik-v/yii2-widget-fileinput": "^1.1",
+        "kartik-v/yii2-widget-fileinput": "dev-master",
         "kartik-v/yii2-datecontrol": "dev-master",
         "artem-frolov/yii-sass": "^2.0",
         "voskobovich/yii2-many-many-behavior": "^3.2",
-        "hail812/yii2-adminlte3": "^1.1"
+        "hail812/yii2-adminlte3": "^1.1",
+        "yiisoft/yii2-imagine": "^2.3"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

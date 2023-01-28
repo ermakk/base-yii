@@ -11,6 +11,7 @@ use Yii;
  * @property string $model
  * @property int $from_id
  * @property int $to_id
+ * @property string|null $relation_model Связная модель
  */
 class Relations extends \yii\db\ActiveRecord
 {
@@ -30,7 +31,7 @@ class Relations extends \yii\db\ActiveRecord
         return [
             [['model', 'from_id', 'to_id'], 'required'],
             [['from_id', 'to_id'], 'integer'],
-            [['model'], 'string', 'max' => 255],
+            [['model', 'relation_model'], 'string', 'max' => 255],
         ];
     }
 
@@ -40,19 +41,11 @@ class Relations extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'model' => 'Model',
-            'from_id' => 'From ID',
-            'to_id' => 'To ID',
+            'id' => Yii::t('app', 'ID'),
+            'model' => Yii::t('app', 'Model'),
+            'from_id' => Yii::t('app', 'From ID'),
+            'to_id' => Yii::t('app', 'To ID'),
+            'relation_model' => Yii::t('app', 'Связная модель'),
         ];
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return RelationsQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new RelationsQuery(get_called_class());
     }
 }

@@ -18,11 +18,13 @@ $this->params['breadcrumbs'][] = $this->title;
            echo $this->render('_form', [
 
                'model' => $model,
-               'eav' => $eav
+               'eav' => $eav,
+               'categoryList' => $categoryList
            ]);
        } else {
            echo $this->render('_form', [
                'model' => $model,
+               'categoryList' => $categoryList
            ]);
        }
     ?>
