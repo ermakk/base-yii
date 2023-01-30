@@ -2,6 +2,7 @@
 
 use common\models\Product;
 use kartik\file\FileInput;
+use lo\widgets\modal\ModalAjax;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
@@ -52,6 +53,19 @@ use yii\widgets\ActiveForm;
         </div>
     </div>
     <?= $form->field($model, 'artikul')->textInput(['maxlength' => true]) ?>
+
+    <? ModalAjax::begin([
+        'id' => 'Create-Price-modal',
+        'header' => 'Create Company',
+        'toggleButton' => [
+            'label' => 'New Price',
+            'class' => 'btn btn-secondary'
+        ],
+        'url' => Url::to(['/product-price/create-ajax', 'pid' => $model->id]),
+        'ajaxSubmit' => true,
+    ])?>
+
+    <? ModalAjax::end()?>
 
     <?= $form->field($model, 'text')->textarea() ?>
 

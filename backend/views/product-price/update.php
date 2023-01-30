@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
+/** @var array $data_product */
 /** @var common\models\ProductPrice $model */
 
 $this->title = 'Update Product Price: ' . $model->id;
@@ -16,6 +17,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'data_product' => $data_product
     ]) ?>
 
 </div>

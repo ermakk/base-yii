@@ -3,27 +3,41 @@
 namespace frontend\controllers;
 
 use common\models\Product;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 
 class ProductController extends \yii\web\Controller
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['logout', 'signup'],
+                'rules' => [
+                    [
+                        'actions' => ['signup'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'actions' => ['logout'],
+                        'allow' => true,
+                        'roles' => ['@'],
                     ],
                 ],
-            ]
-        );
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'logout' => ['index'],
+                ],
+            ],
+        ];
     }
 
     public function actionIndex()

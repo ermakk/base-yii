@@ -38,7 +38,8 @@
         "artem-frolov/yii-sass": "^2.0",
         "voskobovich/yii2-many-many-behavior": "^3.2",
         "hail812/yii2-adminlte3": "^1.1",
-        "yiisoft/yii2-imagine": "^2.3"
+        "yiisoft/yii2-imagine": "^2.3",
+        "loveorigami/yii2-modal-ajax": "@dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

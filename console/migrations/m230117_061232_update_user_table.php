@@ -12,8 +12,8 @@ class m230117_061232_update_user_table extends Migration
      */
     public function safeUp()
     {
-        $this->addColumn('{{%user}}', 'status', $this->smallInteger(6)->defaultValue(10));
-        $this->addColumn('{{%user}}', 'verification_token', $this->string());
+//        $this->addColumn('{{%user}}', 'status', $this->smallInteger(6)->defaultValue(10));
+//        $this->addColumn('{{%user}}', 'verification_token', $this->string());
     }
 
     /**
@@ -21,8 +21,8 @@ class m230117_061232_update_user_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropColumn('{{%user}}', 'status');
-        $this->dropColumn('{{%user}}', 'verification_token');
+//        $this->dropColumn('{{%user}}', 'status');
+//        $this->dropColumn('{{%user}}', 'verification_token');
         echo "m230117_061232_update_user_table cannot be reverted.\n";
 
         return false;

@@ -51,17 +51,18 @@
                         'label' => 'Продукция',
                         'items' => [
                             ['label' => 'Редактор', 'url' => ['/product/'], 'iconStyle' => 'far'],
-                            ['label' => 'Учет продукции', 'iconStyle' => 'far', 'url' => ['/transactions']],
-                            [
-                                'label' => 'Level2',
-                                'iconStyle' => 'far',
-                                'items' => [
-                                    ['label' => 'Level3', 'iconStyle' => 'far', 'icon' => 'dot-circle'],
-                                    ['label' => 'Level3', 'iconStyle' => 'far', 'icon' => 'dot-circle'],
-                                    ['label' => 'Level3', 'iconStyle' => 'far', 'icon' => 'dot-circle']
-                                ]
-                            ],
-                            ['label' => 'Level2', 'iconStyle' => 'far']
+                            ['label' => 'Учет продукции', 'iconStyle' => 'far', 'url' => ['/product-receipt']],
+//                            [
+//                                'label' => 'Цены',
+//                                'iconStyle' => 'far',
+//                                'items' => [
+//                                    ['label' => 'Level3', 'iconStyle' => 'far', 'icon' => 'dot-circle'],
+//                                    ['label' => 'Level3', 'iconStyle' => 'far', 'icon' => 'dot-circle'],
+//                                    ['label' => 'Level3', 'iconStyle' => 'far', 'icon' => 'dot-circle']
+//                                ]
+//                            ],
+                            ['label' => 'Цены', 'iconStyle' => 'far', 'url' => ['/product-price']],
+                            ['label' => 'Типы', 'iconStyle' => 'far', 'url' => ['/product-type'], 'visible' => Yii::$app->user->can('superadmin')]
                         ]
                     ],
                     ['label' => 'Категории', 'url' => ['/product-category']],
