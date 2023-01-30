@@ -54,18 +54,21 @@ use yii\widgets\ActiveForm;
     </div>
     <?= $form->field($model, 'artikul')->textInput(['maxlength' => true]) ?>
 
-    <? ModalAjax::begin([
-        'id' => 'Create-Price-modal',
-        'header' => 'Create Company',
-        'toggleButton' => [
-            'label' => 'New Price',
-            'class' => 'btn btn-secondary'
-        ],
-        'url' => Url::to(['/product-price/create-ajax', 'pid' => $model->id]),
-        'ajaxSubmit' => true,
-    ])?>
+    <?php
+    if($model->id) {
+        ModalAjax::begin([
+            'id' => 'Create-Price-modal',
+            'header' => 'Create Company',
+            'toggleButton' => [
+                'label' => 'New Price',
+                'class' => 'btn btn-secondary'
+            ],
+            'url' => Url::to(['/product-price/create-ajax', 'pid' => $model->id]),
+            'ajaxSubmit' => true,
+        ]);
+    }?>
 
-    <? ModalAjax::end()?>
+    <?php ModalAjax::end()?>
 
     <?= $form->field($model, 'text')->textarea() ?>
 

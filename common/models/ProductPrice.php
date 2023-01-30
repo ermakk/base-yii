@@ -35,7 +35,7 @@ class ProductPrice extends ActiveRecord
     public function rules()
     {
         return [
-            [['value', 'product_id', 'user_created', 'created_at'], 'required'],
+            [['value', 'product_id', 'user_created'], 'required'],
             [['value', 'product_id', 'user_created', 'created_at'], 'integer'],
             [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::class, 'targetAttribute' => ['product_id' => 'id']],
             [['user_created'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_created' => 'id']],

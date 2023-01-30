@@ -74,8 +74,13 @@ class ProductPriceController extends Controller
 
         $data_product = ArrayHelper::map((new Product())::find()->select(['CONCAT(id, " ", title, " (артикул: ", artikul, ", код: ", code, ")") AS title', 'id'])->all(), 'id', 'title');
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+//            var_dump($model->load($this->request->post()));
+//            var_dump($model); die;
+            if ($model->load($this->request->post())){
+//                $model->user_created = Yii::$app->user->id;
+                if($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -92,7 +97,7 @@ class ProductPriceController extends Controller
      * @return string|\yii\web\Response
      */
     public function actionCreateAjax($pid){
-        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+//        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $model = new ProductPrice();
         if($pid !== null){
             $model->loadDefaultValues();
@@ -100,10 +105,10 @@ class ProductPriceController extends Controller
         }
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return ['result' => true];
+//                return 'это тестовая фраза для модального окна';//['result' => true];
             }
         } else {
-            return ['result' => false, 'error' => $model->errors];
+//            return ['result' => false, 'error' => $model->errors];
         }
         return $this->renderAjax('create_ajax', [
             'model' => $model
