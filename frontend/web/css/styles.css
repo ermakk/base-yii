@@ -13,6 +13,9 @@ html{
     color: #555;
 }
 
+.cursore-pointer {
+    cursor: pointer;
+}
 ul, nav{
     list-style: none;
 }
@@ -304,35 +307,77 @@ header nav li:last-child{
     background-color: #fff;
 }
 
+.main-bc .grid{
+    justify-content: left;
+}
 .our-work .grid li,
 .main-bc .grid li
 {
-    padding: 20px;
-    margin-bottom: 40px;
-    height: 350px;
+    /*padding: 20px;*/
+    margin: 20px 40px;
+    height: auto;
+    aspect-ratio: 1;
     border-radius: 3px;
     color: #444;
     font-size: 1.1rem;
-    background-clip: content-box;
-    background-size: cover;
-    background-position: center;
-    background-color: #333;
 }
 
 .main-bc .grid li .product-image {
+    background-clip: content-box;
+    background-size: cover;
+    background-position: center;
     width:100%;
-    height:100%;
+    height:auto;
+    aspect-ratio: 1;
+    box-shadow:  0 0 20px rgba(0,0,0,0.1);
 }
 
 .main-bc .grid li .product-title {
-    font-size: 1.1rem;
+    font-size: 1.4rem;
     color: #444;
 }
 .main-bc .grid li .product-price {
-    font-size: 1.5rem;
+    text-align: right;
+    font-size: 1.4rem;
     color: #444;
 }
 
+.main-bc  .grid .w-10
+{
+    flex-basis: 10%;
+}
+.main-bc  .grid .w-20
+{
+    flex-basis: 20%;
+}
+.main-bc  .grid .w-30
+{
+    flex-basis: 30%;
+}
+.main-bc  .grid .w-40
+{
+    flex-basis: 40%;
+}
+.main-bc  .grid .w-50
+{
+    flex-basis: 50%;
+}
+.main-bc  .grid .w-60
+{
+    flex-basis: 60%;
+}
+.main-bc  .grid .w-70
+{
+    flex-basis: 70%;
+}
+.main-bc  .grid .w-80
+{
+    flex-basis: 80%;
+}
+.main-bc  .grid .w-90
+{
+    flex-basis: 90%;
+}
 .our-work .grid li.small,
 .main-bc .grid li.small
 {
@@ -346,74 +391,141 @@ header nav li:last-child{
 }
 
 .our-work .grid li.middle,
-.main-bc  .grid li.middle
+.main-bc  .grid .middle
 {
     flex-basis: 50%;
 }
-.our-work .grid li.col-6,
-.main-bc  .grid li.col-6
+.our-work .grid li.f-col-6,
+.main-bc  .grid li.f-col-6
 {
-    flex-basis: 50%;
+    flex-basis: calc((100% / 2) - 40px *2 );
 }
-.our-work .grid li.col-4,
-.main-bc  .grid li.col-4
+.our-work .grid li.f-col-4,
+.main-bc  .grid li.f-col-4
 {
-    flex-basis: calc(100% / 3);
-}
-
-.our-work .grid li.col-3,
-.main-bc  .grid li.col-3
-{
-    flex-basis: calc(100% / 4);
-}
-.our-work .grid li.col-2,
-.main-bc  .grid li.col-2
-{
-    flex-basis: calc(100% / 6);
-}
-.our-work .grid li.col-1,
-.main-bc  .grid li.col-1
-{
-    flex-basis: calc(100% / 12);
+    flex-basis: calc((100% / 3) - 40px *2 );
 }
 
+.our-work .grid li.f-col-3,
+.main-bc  .grid li.f-col-3
+{
+    margin: 10px 20px;
+    flex-basis: calc((100% / 4) - 20px *2 );
+}
+.our-work .grid li.f-col-2,
+.main-bc  .grid li.f-col-2
+{
+    margin: 5px 10px;
+    flex-basis: calc((100% / 6) - 10px *2 );
+}
+.our-work .grid li.f-col-1,
+.main-bc  .grid li.f-col-1
+{
+    height: calc((100% / 12) - 10px *2 );
+    margin: 5px 10px;
+    flex-basis: calc((100% / 12) - 10px *2 );
+}
 
-@media (max-width: 1000px){
+
+@media (max-width: 1000px) and (min-width: 550px){
 
     .our-work .grid li.small,
     .our-work .grid li.middle,
     .our-work .grid li.large{
         flex-basis: 100%;
     }
-    .our-work .grid li.col-6,
-    .main-bc  .grid li.col-6
+    .our-work .grid li.f-col-6,
+    .main-bc  .grid li.f-col-6
     {
-        flex-basis: 100%;
+        height: calc((100% / 2) - 40px *2 );
+        flex-basis: calc((100% / 2) - 40px *2);
     }
-    .our-work .grid li.col-4,
-    .main-bc  .grid li.col-4
+    .our-work .grid li.f-col-4,
+    .main-bc  .grid li.f-col-4
     {
-        flex-basis: calc(100% / 2);
+        height: calc((100% / 2) - 40px *2);
+        flex-basis: calc((100% / 2) - 40px*2 );
     }
 
-    .our-work .grid li.col-3,
-    .main-bc  .grid li.col-3
+    .our-work .grid li.f-col-3,
+    .main-bc  .grid li.f-col-3
     {
-        flex-basis: calc(100% / 3);
+        flex-basis: calc((100% / 3) - 20px *2 );
     }
-    .our-work .grid li.col-2,
-    .main-bc  .grid li.col-2
+    .our-work .grid li.f-col-2,
+    .main-bc  .grid li.f-col-2
     {
-        flex-basis: calc(100% / 4);
+        flex-basis: calc((100% / 4) - 10px *3 );
     }
-    .our-work .grid li.col-1,
-    .main-bc  .grid li.col-1
+    .our-work .grid li.f-col-1,
+    .main-bc  .grid li.f-col-1
     {
-        flex-basis: calc(100% / 4);
+        height: calc((100vw  / 4));
+        flex-basis: calc((100% / 4));
+    }
+
+    .main-bc  .grid .w-10,
+    .main-bc  .grid .w-20,
+    .main-bc  .grid .w-30
+    {
+        flex-basis: 30%;
+    }
+    .main-bc  .grid .w-40,
+    .main-bc  .grid .w-50,
+    .main-bc  .grid .w-60,
+    .main-bc  .grid .w-70,
+    .main-bc  .grid .w-80,
+    .main-bc  .grid .w-90
+    {
+        flex-basis: 70%;
     }
 }
 
+@media (max-width: 550px) {
 
+    .our-work .grid li.f-col-6,
+    .main-bc .grid li.f-col-6 {
+        height: calc(100% );
+        flex-basis: calc(100% );
+    }
+    .our-work .grid li.f-col-4,
+    .main-bc  .grid li.f-col-4
+    {
+        height: calc(100% );
+        flex-basis: calc(100% );
+    }
+    .our-work .grid li.f-col-3,
+    .main-bc  .grid li.f-col-3
+    {
+        height: calc(100% );
+        flex-basis: calc((100% / 2) - 20px *2 );
+    }
+    .our-work .grid li.f-col-2,
+    .main-bc  .grid li.f-col-2
+    {
+        height: calc(100% );
+        flex-basis: calc(100% );
+    }
+    .our-work .grid li.f-col-1,
+    .main-bc  .grid li.f-col-1
+    {
+        height: calc(100% );
+        flex-basis: calc(100% );
+    }
+
+    .main-bc  .grid .w-10,
+    .main-bc  .grid .w-20,
+    .main-bc  .grid .w-30,
+    .main-bc  .grid .w-40,
+    .main-bc  .grid .w-50,
+    .main-bc  .grid .w-60,
+    .main-bc  .grid .w-70,
+    .main-bc  .grid .w-80,
+    .main-bc  .grid .w-90
+    {
+        flex-basis: 100%;
+    }
+}
 
 /*----------------------
  	Features Section

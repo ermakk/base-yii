@@ -51,11 +51,16 @@ class ProductController extends \yii\web\Controller
         $this->layout = 'main';
         $category = null;
         if ($code !== null && is_string($code)){
-            $category = ProductCategory::find()->where(['code' => $code])->one();
+            if($category = ProductCategory::find()->where(['code' => $code])->one()){
+                return $this->render('category_index',
+                    [
+                        'category' => $category
+                    ]);
+            }
+
         }
-        return $this->render('category_index',
+        return $this->render('index',
         [
-            'category' => $category
         ]);
     }
 
