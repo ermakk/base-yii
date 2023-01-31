@@ -158,7 +158,7 @@ public function beforeSave($insert)
     {
         return [
             [['title'], 'required'],
-            [['category_id', 'type_id'], 'integer'],
+            [['category_id', 'type_id', 'price'], 'integer'],
             [['title', 'code', 'artikul', 'text', 'code'], 'string', 'max' => 255],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductCategory::class, 'targetAttribute' => ['category_id' => 'id']],
             [['type_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductType::class, 'targetAttribute' => ['type_id' => 'id']],
@@ -181,6 +181,7 @@ public function beforeSave($insert)
             'text' => 'Описание',
             'category_id' => 'Категория',
             'type_id' => 'Тип',
+            'price' => 'Цена'
         ];
     }
 
@@ -205,7 +206,8 @@ public function beforeSave($insert)
                             'model' => self::className(),
                             'relation_model' => File::className(),
                         ]
-                    ]
+                    ],
+                    'price' => 'productPrices',
                 ],
             ],
         ];
@@ -236,7 +238,22 @@ public function beforeSave($insert)
         return $query;
     }
 
-
+    /***
+    * Gets and Sets Price function
+     ***/
+    public function getPrice(){
+        return $this->hasMany(ProductPrice::className(), ['product_id' => 'id'])->orderBy(['created_at' => SORT_DESC])->limit(1)->one()['value'];
+    }
+    public function getPriceValue(){
+        return $this->price ? $this->price.' '.Yii::$app->params['valute'] : 'Цена не указана';
+    }
+    public function setPrice($value){
+        $price = new ProductPrice();
+        $price->product_id = $this->id;
+        $price->user_created = Yii::$app->user->id;
+        $price->value = $value;
+        return $price->save();
+    }
 
     /**
      * Gets query for [[Category]].

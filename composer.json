@@ -39,7 +39,10 @@
         "voskobovich/yii2-many-many-behavior": "^3.2",
         "hail812/yii2-adminlte3": "^1.1",
         "yiisoft/yii2-imagine": "^2.3",
-        "loveorigami/yii2-modal-ajax": "@dev"
+        "loveorigami/yii2-modal-ajax": "@dev",
+        "mihaildev/yii2-ckeditor": "*",
+        "kartik-v/yii2-nav-x": "dev-master",
+        "kartik-v/yii2-bootstrap4-dropdown": "@dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

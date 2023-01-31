@@ -3,6 +3,7 @@
 use common\models\Product;
 use kartik\file\FileInput;
 use lo\widgets\modal\ModalAjax;
+use mihaildev\ckeditor\CKEditor;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
@@ -54,23 +55,14 @@ use yii\widgets\ActiveForm;
     </div>
     <?= $form->field($model, 'artikul')->textInput(['maxlength' => true]) ?>
 
-    <?php
-    if($model->id) {
-        ModalAjax::begin([
-            'id' => 'Create-Price-modal',
-            'header' => 'Create Company',
-            'toggleButton' => [
-                'label' => 'New Price',
-                'class' => 'btn btn-secondary'
-            ],
-            'url' => Url::to(['/product-price/create-ajax', 'pid' => $model->id]),
-            'ajaxSubmit' => true,
-        ]);
-    }?>
+    <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
 
-    <?php ModalAjax::end()?>
-
-    <?= $form->field($model, 'text')->textarea() ?>
+    <?= $form->field($model, 'text')->widget(CKEditor::className(),[
+        'editorOptions' => [
+            'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+            'inline' => false, //по умолчанию false
+        ],
+    ]); ?>
 
     <?= !isset($model->category_id) || isset($model->id) ? $form->field($model, 'category_id')->dropDownList(\yii\helpers\ArrayHelper::map($categoryList, 'id', 'title')) : '' ?>
 

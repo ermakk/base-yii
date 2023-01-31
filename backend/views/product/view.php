@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="product-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode('#'.$model->id. ' '.$this->title) ?></h1>
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -32,13 +32,20 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' =>  array_merge(
             [
-                'id',
                 'title',
                 'code',
                 'artikul',
                 'text',
-                'category_id',
+                'category.title:text:Категория',
                 'type_id',
+                [
+                    'label' => 'Цена',
+                    'class' => DataColumn::class,
+                    'format' => 'raw',
+                    'value' => function(Product $model){
+                        return $model->priceValue;
+                    },
+                ],
                 [
                     'label' => 'Изображения',
                     'class' => DataColumn::class,

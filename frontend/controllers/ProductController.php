@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Product;
+use common\models\ProductCategory;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
@@ -44,6 +45,18 @@ class ProductController extends \yii\web\Controller
     {
         $this->layout = 'main';
         return $this->render('index');
+    }
+    public function actionCategory($code)
+    {
+        $this->layout = 'main';
+        $category = null;
+        if ($code !== null && is_string($code)){
+            $category = ProductCategory::find()->where(['code' => $code])->one();
+        }
+        return $this->render('category_index',
+        [
+            'category' => $category
+        ]);
     }
 
     public function actionView()

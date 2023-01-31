@@ -5,10 +5,11 @@
 
 use common\widgets\Alert;
 use frontend\assets\AppAsset;
-use common\widgets\Nav;
+use kartik\bs4dropdown\Dropdown;
 use yii\bootstrap4\Breadcrumbs;
 use yii\bootstrap4\Html;
-use common\widgets\NavBar;
+use yii\bootstrap4\Nav;
+use yii\bootstrap4\NavBar;
 
 AppAsset::register($this);
 ?>
@@ -34,20 +35,19 @@ AppAsset::register($this);
 
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-//            'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
-        ],
+//        'brandLabel' => Yii::$app->name,
+//        'brandUrl' => Yii::$app->homeUrl,
+//        'brandOptions' => ['class'=>'p-0'],
+        'options' => ['class' => 'navbar navbar-expand-lg navbar-light'/*, 'style' => 'text-color: #ccc'*/]
     ]);
+    $itemsCat = (new \common\models\ProductCategory())->getNavCatList(null, 1, 2);
+
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'Catalog', 'items' => [
-
-            ['label' => 'Туристическое снаряжение', 'url' => ['/site/about']],
-        ]],
+        ['label' => 'Catalog', 'items' => $itemsCat],
         ['label' => 'Contact', 'url' => ['/site/contact']],
     ];
+
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
@@ -62,8 +62,10 @@ AppAsset::register($this);
             . '</li>';
     }
     echo Nav::widget([
-        'options' => ['class' => 'navbar-nav ml-auto'],
+//        'options' => ['class' => 'navbar-nav'],
         'items' => $menuItems,
+        'dropdownClass' => Dropdown::class, // use the custom dropdown
+        'options' => ['class' => 'navbar-nav mr-auto me-auto'],
     ]);
     NavBar::end();
     ?>
