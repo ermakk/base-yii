@@ -2,7 +2,6 @@
 /** @var yii\web\View $this */
 /** @var \common\models\ProductCategory $category */
 ?>
-<h1><?= $category->title ?></h1>
 <?php if ($category != null){?>
 
     <ul class="grid">
@@ -13,6 +12,13 @@
     </div>
 
     <div class="main-bc w-80">
+        <h3 style="width: 100%; text-align: center"><?= $category->title ?></h3>
+        <div class="content-block block-filter">
+            Сортировка: <span class="price"> цена</span>
+            Cтоимость: <span class="price"> > 700</span>
+            Cтоимость: <span class="price"> < 70000</span>
+            Наличие: <span class="price"> В наличии</span>
+        </div>
 <ul class="grid">
     <?php
     if ($products = $category->products){
