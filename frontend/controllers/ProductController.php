@@ -4,6 +4,8 @@ namespace frontend\controllers;
 
 use common\models\Product;
 use common\models\ProductCategory;
+use common\models\ProductSearch;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
@@ -44,23 +46,48 @@ class ProductController extends \yii\web\Controller
     public function actionIndex()
     {
         $this->layout = 'main';
-        return $this->render('index');
+        $searchModel = new ProductSearch();
+
+        $products = new ActiveDataProvider([
+            'query' => $searchModel->search($this->request->queryParams)->query->orderBy($this->request->queryParams['sort']),
+            'pagination' => [
+                'pageSize' => 4,
+            ],
+        ]);
+//        $products->setSort([
+//            'defaultOrder' => ['price' => SORT_ASC],
+//        ]);
+//        var_dump($products->query); die;
+        return $this->render('category_index',[
+            'params' => $this->request->queryParams,
+            'products' => $products,
+            'category' => null
+        ]);
     }
-    public function actionCategory($code)
+    public function actionCategory($code = null)
     {
         $this->layout = 'main';
         $category = null;
         if ($code !== null && is_string($code)){
             if($category = ProductCategory::find()->where(['code' => $code])->one()){
-                return $this->render('category_index',
-                    [
-                        'category' => $category
-                    ]);
+
+                return $this->render('category_index', [
+                    'params' => $this->request->queryParams,
+                    'category' => $category
+                ]);
             }
 
+        } else {
+            $searchModel = new ProductSearch();
+            $dataProvider = $searchModel->search($this->request->queryParams);
+//            var_dump($this->request->queryParams); die;
+
+            $products = $dataProvider->query->all();
         }
-        return $this->render('index',
-        [
+        return $this->render('category_index',[
+            'params' => $this->request->queryParams,
+            'products' => $products,
+            'category' => $category
         ]);
     }
 

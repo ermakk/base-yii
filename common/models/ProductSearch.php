@@ -11,13 +11,14 @@ use common\models\Product;
  */
 class ProductSearch extends Product
 {
+    private $params = null;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'category_id', 'type_id'], 'integer'],
+            [['id', 'category_id', 'type_id', 'price'], 'integer'],
             [['title', 'code', 'artikul', 'text'], 'safe'],
         ];
     }
@@ -40,7 +41,7 @@ class ProductSearch extends Product
      */
     public function search($params)
     {
-        $query = Product::find();
+        $query = Product::find()->joinWith('productPrices');
 
         // add conditions that should always apply here
 
@@ -48,7 +49,19 @@ class ProductSearch extends Product
             'query' => $query,
         ]);
 
+        $dataProvider->setSort([
+            'attributes' => [
+                'price' => [
+                    'asc' => [ProductPrice::tableName().'.value' => SORT_ASC],
+                    'desc' => [ProductPrice::tableName().'.value' => SORT_DESC],
+                    'label' => 'Стоимость',
+                    'default' => SORT_ASC,
+                ]
+            ]
+        ]);
+
         $this->load($params);
+        $this->params = $params;
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -67,6 +80,18 @@ class ProductSearch extends Product
             ->andFilterWhere(['like', 'code', $this->code])
             ->andFilterWhere(['like', 'artikul', $this->artikul])
             ->andFilterWhere(['like', 'text', $this->text]);
+
+        if(isset($params["price_max"])){
+            $query->joinWith(['productPrices' => function($q){
+                $q->where(['<=', ProductPrice::tableName().'.value', $this->params["price_max"]]);
+            }]);
+        }
+        if(isset($params["price_min"])){
+            $query->joinWith(['productPrices' => function($q){
+                $q->where(['>=', ProductPrice::tableName().'.value', $this->params["price_min"]]);
+            }]);
+        }
+
 
         return $dataProvider;
     }

@@ -48,8 +48,8 @@ use yii\widgets\ActiveForm;
             &nbsp;(Заполнить поле CODE?)
         </span>') ?>
 
-    <div class="card card-body">
-        <div class="collapse" id="collapseExample">
+    <div class="collapse" id="collapseExample">
+        <div class="card card-body">
             <?= $form->field($model, 'code')->textInput(['maxlength' => true]) ?>
         </div>
     </div>

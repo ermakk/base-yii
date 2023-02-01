@@ -245,7 +245,8 @@ public function beforeSave($insert)
         return $this->hasMany(ProductPrice::className(), ['product_id' => 'id'])->orderBy(['created_at' => SORT_DESC])->limit(1)->one()['value'];
     }
     public function getPriceValue(){
-        return $this->price ? $this->price.' '.Yii::$app->params['valute'] : 'Цена не указана';
+        $price = '<span class="hs">'.number_format($this->price, 0, '.', '</span><span class="hs">').'</span>';
+        return $this->price ? $price.' '.Yii::$app->params['valute'] : 'Цена не указана';
     }
     public function setPrice($value){
         $price = new ProductPrice();

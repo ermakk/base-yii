@@ -49,16 +49,6 @@ class ProductCategorySearch extends ProductCategory
             'query' => $query,
         ]);
 
-//        $dataProvider->setSort([
-//            'attributes' => [
-//                'parentName' => [
-//                    'asc' => ['parentName' => SORT_ASC],
-//                    'desc' => ['parentName' => SORT_DESC],
-//                    'label' => 'Родительская категория',
-//                    'default' => SORT_ASC,
-//                ]
-//            ]
-//        ]);
 
         $this->load($params);
 

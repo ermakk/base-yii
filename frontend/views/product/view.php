@@ -1,5 +1,8 @@
 <?php
 /** @var yii\web\View $this */
+
+$this->title = 'view';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <h1>product/view</h1>
 

@@ -30,46 +30,8 @@ AppAsset::register($this);
     <body>
     <?php $this->beginBody() ?>
 
-    <header class="header">
-        <h2><a href="#"><?=Yii::$app->name?></a></h2>
+    <?= $this->render('header') ?>
 
-        <?php
-
-        NavBar::begin([
-//        'brandLabel' => Yii::$app->name,
-//        'brandUrl' => Yii::$app->homeUrl,
-//        'brandOptions' => ['class'=>'p-0'],
-            'options' => ['class' => 'navbar navbar-expand-lg navbar-light'/*, 'style' => 'text-color: #ccc'*/]
-        ]);
-        $itemsCat = (new \common\models\ProductCategory())->getNavCatList();
-
-        $menuItems = [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'Catalog', 'items' => $itemsCat],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-        ];
-        if (Yii::$app->user->isGuest) {
-            $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-            $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-        } else {
-            $menuItems[] = '<li>'
-                . Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>';
-        }
-        echo Nav::widget([
-//        'options' => ['class' => 'navbar-nav'],
-            'items' => $menuItems,
-            'dropdownClass' => Dropdown::class, // use the custom dropdown
-            'options' => ['class' => 'navbar-nav mr-auto me-auto'],
-        ]);
-        NavBar::end();
-        ?>
-    </header>
     <?= Breadcrumbs::widget([
         'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
     ]) ?>
@@ -77,7 +39,7 @@ AppAsset::register($this);
 
 
 
-    <section class="main-bc">
+    <section class="main-bc" style="padding-top: 0px">
 
 
         <?= Alert::widget() ?>
