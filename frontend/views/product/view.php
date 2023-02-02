@@ -1,12 +1,9 @@
 <?php
 /** @var yii\web\View $this */
+/** @var \common\models\Product $product */
 
-$this->title = 'view';
+$this->title = $product ? $product->title : 'Ошибка';
+$this->params['breadcrumbs'][] = ['label' => 'Каталог', 'url' => \yii\helpers\Url::to(['/product/category'])];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<h1>product/view</h1>
-
-<p>
-    You may change the content of this page by modifying
-    the file <code><?= __FILE__; ?></code>.
-</p>
+<?php var_dump($product);?>

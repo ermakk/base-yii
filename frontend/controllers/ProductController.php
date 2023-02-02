@@ -46,22 +46,24 @@ class ProductController extends \yii\web\Controller
     public function actionIndex()
     {
         $this->layout = 'main';
-        $searchModel = new ProductSearch();
 
-        $products = new ActiveDataProvider([
-            'query' => $searchModel->search($this->request->queryParams)->query->orderBy($this->request->queryParams['sort']),
-            'pagination' => [
-                'pageSize' => 4,
-            ],
+        $category = null;
+        if($_GET && array_key_exists('code', $_GET)) {
+            $code = $_GET['code'];
+            $category = ProductCategory::find()->where(['code' => $code])->one();
+
+        }
+
+        $searchModel = new ProductSearch();
+        $products = $searchModel->search($this->request->queryParams);
+        $products->sort->enableMultiSort = true;
+        $products->setPagination([
+            'pageSize' => 9
         ]);
-//        $products->setSort([
-//            'defaultOrder' => ['price' => SORT_ASC],
-//        ]);
-//        var_dump($products->query); die;
         return $this->render('category_index',[
             'params' => $this->request->queryParams,
             'products' => $products,
-            'category' => null
+            'category' => $category
         ]);
     }
     public function actionCategory($code = null)
@@ -71,18 +73,29 @@ class ProductController extends \yii\web\Controller
         if ($code !== null && is_string($code)){
             if($category = ProductCategory::find()->where(['code' => $code])->one()){
 
+                $searchModel = new ProductSearch();
+                $params = $this->request->queryParams;
+                $params['category_id'] = (string) $category->id;
+                $products = $searchModel->search($params);
+                $products->sort->enableMultiSort = true;
+                $products->setPagination([
+                    'pageSize' => 9
+                ]);
                 return $this->render('category_index', [
                     'params' => $this->request->queryParams,
+                    'products' => $products,
                     'category' => $category
                 ]);
             }
 
         } else {
-            $searchModel = new ProductSearch();
-            $dataProvider = $searchModel->search($this->request->queryParams);
-//            var_dump($this->request->queryParams); die;
 
-            $products = $dataProvider->query->all();
+            $searchModel = new ProductSearch();
+            $products = $searchModel->search($this->request->queryParams);
+            $products->sort->enableMultiSort = true;
+            $products->setPagination([
+                'pageSize' => 9
+            ]);
         }
         return $this->render('category_index',[
             'params' => $this->request->queryParams,
@@ -91,9 +104,12 @@ class ProductController extends \yii\web\Controller
         ]);
     }
 
-    public function actionView()
+    public function actionView($code)
     {
-        return $this->render('view');
+        $product = Product::find()->where(['id'=> $code])->one();
+        return $this->render('view',[
+            'product' => $product
+        ]);
     }
     /**
      * Finds the Product model based on its primary key value.

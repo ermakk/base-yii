@@ -333,20 +333,31 @@ header nav li:last-child{
     color: #444;
     font-size: 1.1rem;
 }
-.content-block, .block-filter,
-.content-block, .block-filter .price
+.content-block,
+.block-filter,
+.price
 {
     background-color: white;
     border-radius: 5px;
     font-size: 14pt;
     padding: 10px 20px;
 }
-.block-filter .price
+.block-filter {
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+    justify-content: flex-start;
+}
+.filter_value
 {
+    height: 18pt;
     border: solid 1px #bbb;
-    padding: 3px 5px ;
-    margin: 0px 30px 0px 0px ;
-    border-radius: 3px;
+    padding: 0px 11px;
+    margin: 0px 10px 0px 10px;
+    border-radius: 5px;
 }
 
 .block-filter{

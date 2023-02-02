@@ -4,15 +4,28 @@
 /** @var \common\models\Product[] $products */
 /** @var array $params */
 
+use yii\bootstrap4\Html;
 use yii\bootstrap4\LinkPager;
+use yii\helpers\Url;
 use yii\widgets\Pjax;
 
 $this->title = 'view';
-$this->params['breadcrumbs'][] = ['label' => 'Каталог', 'url' => \yii\helpers\Url::to(['/product/index'])];
-$this->params['breadcrumbs'][] = $category ? $category->title : 'Все товары';
-?>
+if(array_key_exists('code', $_GET)) {
+    $this->params['breadcrumbs'][] = ['label' => 'Каталог', 'url' => \yii\helpers\Url::to(['/product/category'])];
+    $this->params['breadcrumbs'][] = ['label' => $category->title, 'url' => \yii\helpers\Url::to(['/product/category/'.$_GET['code']])];
+} else {
+    $this->params['breadcrumbs'][] = ['label' => 'Каталог', 'url' => \yii\helpers\Url::to(['/product/category'])];
+}
+$get = $_GET;
+if(array_key_exists('sort', $get)) {
+    unset($get['sort']);
+}
+if(Yii::$app->request->pathInfo != 'product/index' && array_key_exists('code', $get)) {
+    unset($get['code']);
+}
 
-<?php //Pjax::begin(['id'=>'id-pjax']); ?>
+
+?>
 <?php if ($category !== null){?>
     <h4 style="width: 100%; text-align: center"><?= $category->title?> <span class="counts-product-view"> <?= count($category->products) ?> товаров</span> </h4>
 
@@ -21,7 +34,7 @@ $this->params['breadcrumbs'][] = $category ? $category->title : 'Все това
     <h4 style="width: 100%; text-align: center">Все товары </h4>
 <?php } ?>
 
-<ul class="grid">
+<?php Pjax::begin(['id'=>'id-pjax', 'options' => ['tag' => 'ul', 'class' => 'grid']]); ?>
     <div class="main-bc w-20">
         <div class="grid">
             <div class="main-bc filter">
@@ -41,14 +54,57 @@ $this->params['breadcrumbs'][] = $category ? $category->title : 'Все това
     </div>
 
     <div class="main-bc w-80">
-        <div class="content-block block-filter">
+        <div class="content-block block-filter" style="font-size: 12pt">
+                <div class="">
+                    Сортировка:
+                </div>
+                <div class="">
+                    <?= Html::dropDownList(
+                        'sort',
+                        Yii::$app->request->get('sort'),
+                        [
+                            'category_id' => 'По категории',
+                            'title' => 'По названию ▲',
+                            '-title' => 'По названию ▼',
+                            'price' => 'Дешевле',
+                            '-price' => 'Дороже'
+                        ],
+                        [
+                            'id' => 'sort_form',
+                            'class' => 'filter_value',
+                            'onchange' => '
+                                let sort_val = $("#sort_form").val();
+                                window.location.href = "'.Url::to(array_merge([Yii::$app->request->pathInfo], count($get) ? $get : [])).(count($get) ? '&' : '?').'sort="+sort_val
+                            ',
+                        ]);
 
-            Сортировка: <span class="price">Цена</span>
+                    ?>
+                </div>
+            Фильтры:&nbsp;
             <?php foreach ($params as $key => $param) { ?>
-                <?= $key ?> <span class="price"> <?= $param ?> </span>
+                <?php if(!in_array($key, ['page', 'sort', 'per-page'])) { ?>
+                    <span class="filter_value">
+                        <?php switch ($key) {
+                            case 'title':
+                                echo "Название: %".$param."%";
+                                break;
+                            case 'price_max':
+                                echo "Стоимость до: ".$param;
+                                break;
+                            case 'price_min':
+                                echo "Стоимость от: ".$param;
+                                break;
+                            case 'code':
+                                echo "Категория: ".$category->title;
+                                break;
+                            default:
+                                echo $param;
+                        } ?>
+                    </span>
 <!--                Cтоимость: <span class="price"> > 700</span>-->
 <!--                Cтоимость: <span class="price"> < 70000</span>-->
 <!--                Наличие: <span class="price"> В наличии</span>-->
+                <?php } ?>
             <?php } ?>
         </div>
 <ul class="grid">
@@ -103,13 +159,11 @@ $this->params['breadcrumbs'][] = $category ? $category->title : 'Все това
                     </div>
                 </div>
             </li>
-            <script>
-                $( document ).ready(function() {
-                    $('#carouselExampleIndicators<?=$pkey?>').carousel({
-                        interval: 10000
-                    })
-                });
-            </script>
+            <?php
+
+            $JS = "$('#carouselExampleIndicators".$pkey."').carousel('pause');";
+            $this->registerJs($JS, $this::POS_LOAD);
+            ?>
         <?php } ?>
     <?php } ?>
 
@@ -119,6 +173,4 @@ $this->params['breadcrumbs'][] = $category ? $category->title : 'Все това
             'pagination' => $products->pagination,
         ]); ?>
     </div>
-</ul>
-
-<?php //Pjax::end(); ?>
+<?php Pjax::end(); ?>
