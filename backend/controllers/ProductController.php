@@ -165,6 +165,7 @@ class ProductController extends Controller
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             if ($eav->load(Yii::$app->request->post()) && $eav->validate()) {
                 $dbTransaction = Yii::$app->db->beginTransaction();
+                var_dump($eav); die;
                 try {
                     $eav->save(false);
                     $dbTransaction->commit();

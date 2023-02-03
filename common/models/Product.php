@@ -159,7 +159,8 @@ public function beforeSave($insert)
         return [
             [['title'], 'required'],
             [['category_id', 'type_id', 'price'], 'integer'],
-            [['title', 'code', 'artikul', 'text', 'code'], 'string', 'max' => 255],
+            [['title', 'code', 'artikul', 'code'], 'string', 'max' => 255],
+            [['text'], 'string'],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductCategory::class, 'targetAttribute' => ['category_id' => 'id']],
             [['type_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductType::class, 'targetAttribute' => ['type_id' => 'id']],
             [['image_ids'], 'each', 'rule' => ['integer']],

@@ -101,6 +101,15 @@ class ObjectAttribute extends Attribute
     {
         return $this->hasMany(ObjectAttributeValue::class, ['attributeId' => 'id']);
     }
+    /**
+     * Gets query for [[ObjectAttributeValues]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getValues($entityId = null)
+    {
+        return $this->hasOne(ObjectAttributeValue::class, ['attributeId' => 'id'])->where(['entityId' => $entityId])->one()['value'];
+    }
 
     /**
      * Gets query for [[Type]].

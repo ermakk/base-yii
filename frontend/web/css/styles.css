@@ -62,14 +62,56 @@ hr{
     margin-bottom: 80px;
 }
 
-section{
+section,
+.main-bc
+{
     display: flex;
     flex-direction: column;
     align-items: center;
 
     padding: 125px 100px;
 }
+.horisont-bc {
 
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-content: space-around;
+    position: absolute;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.horisont-bc::-moz-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.horisont-bc::-moz-scrollbar-track {
+    background-color: #e4e4e4;
+    border-radius: 10px;
+}
+
+.horisont-bc::-moz-scrollbar-thumb {
+    background-color: #d4aa70;
+    border-radius: 10px;
+}
+.horisont-bc::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.horisont-bc::-webkit-scrollbar-track {
+    background-color: #e4e4e4;
+    border-radius: 10px;
+}
+
+.horisont-bc::-webkit-scrollbar-thumb {
+    background-color: #d4aa70;
+    border-radius: 10px;
+}
 @media (max-width: 1000px){
 
     section{
@@ -98,7 +140,7 @@ section h3.title{
     text-align: center;
 }
 
-section p{
+section p.header{
     max-width: 800px;
     text-align: center;
     margin-bottom: 35px;
@@ -464,6 +506,10 @@ header nav li:last-child{
 {
     flex-basis: 90%;
 }
+.main-bc  .grid .w-100
+{
+    flex-basis: 100%;
+}
 .main-bc .persent
 {
     display: flex;
@@ -490,10 +536,45 @@ header nav li:last-child{
 {
     flex-basis: 50%;
 }
+.our-work .grid li.f-col-12,
+.main-bc  .grid li.f-col-12
+{
+    flex-basis: calc((100% *12/ 12) - 40px *2 );
+}
+.our-work .grid li.f-col-11,
+.main-bc  .grid li.f-col-11
+{
+    flex-basis: calc((100% *11/ 12) - 40px *2 );
+}
+.our-work .grid li.f-col-10,
+.main-bc  .grid li.f-col-10
+{
+    flex-basis: calc((100% *10/ 12) - 40px *2 );
+}
+.our-work .grid li.f-col-9,
+.main-bc  .grid li.f-col-9
+{
+    flex-basis: calc((100% *9/ 12) - 40px *2 );
+}
+.our-work .grid li.f-col-8,
+.main-bc  .grid li.f-col-8
+{
+    flex-basis: calc((100% *8/ 12) - 40px *2 );
+}
+.our-work .grid li.f-col-7,
+.main-bc  .grid li.f-col-7
+{
+    flex-basis: calc((100% *7 / 12) - 40px *2 );
+}
 .our-work .grid li.f-col-6,
 .main-bc  .grid li.f-col-6
 {
     flex-basis: calc((100% / 2) - 40px *2 );
+}
+.our-work .grid li.f-col-5,
+.main-bc  .grid li.f-col-5
+{
+    flex-basis: calc((100% *5/ 12) - 40px *2 );
 }
 .our-work .grid li.f-col-4,
 .main-bc  .grid li.f-col-4
@@ -529,12 +610,31 @@ header nav li:last-child{
     .our-work .grid li.large{
         flex-basis: 100%;
     }
+
+    .our-work .grid li.f-col-12,
+    .main-bc  .grid li.f-col-12,
+    .our-work .grid li.f-col-11,
+    .main-bc  .grid li.f-col-11,
+    .our-work .grid li.f-col-10,
+    .main-bc  .grid li.f-col-10,
+    .our-work .grid li.f-col-9,
+    .main-bc  .grid li.f-col-9
+    {
+        height: calc((100% ) - 40px *2 );
+        flex-basis: calc((100%) - 40px *2);
+    }
+    .our-work .grid li.f-col-8,
+    .main-bc  .grid li.f-col-8,
+    .our-work .grid li.f-col-7,
+    .main-bc  .grid li.f-col-7,
     .our-work .grid li.f-col-6,
     .main-bc  .grid li.f-col-6
     {
         height: calc((100% / 2) - 40px *2 );
         flex-basis: calc((100% / 2) - 40px *2);
     }
+    .our-work .grid li.f-col-5,
+    .main-bc  .grid li.f-col-5,
     .our-work .grid li.f-col-4,
     .main-bc  .grid li.f-col-4
     {
@@ -581,11 +681,26 @@ header nav li:last-child{
 
 @media (max-width: 550px) {
 
+
+    .our-work .grid li.f-col-12,
+    .main-bc  .grid li.f-col-12,
+    .our-work .grid li.f-col-11,
+    .main-bc  .grid li.f-col-11,
+    .our-work .grid li.f-col-10,
+    .main-bc  .grid li.f-col-10,
+    .our-work .grid li.f-col-9,
+    .main-bc  .grid li.f-col-9,
+    .our-work .grid li.f-col-8,
+    .main-bc  .grid li.f-col-8,
+    .our-work .grid li.f-col-7,
+    .main-bc  .grid li.f-col-7,
     .our-work .grid li.f-col-6,
     .main-bc .grid li.f-col-6 {
         height: calc(100% );
         flex-basis: calc(100% );
     }
+    .our-work .grid li.f-col-5,
+    .main-bc  .grid li.f-col-5,
     .our-work .grid li.f-col-4,
     .main-bc  .grid li.f-col-4
     {
@@ -626,46 +741,6 @@ header nav li:last-child{
     }
 }
 
-.main-bc  .grid .persent-10
-{
-    flex-basis: 10%;
-}
-.main-bc  .grid .persent-20
-{
-    flex-basis: 20%;
-}
-.main-bc  .grid .persent-30
-{
-    flex-basis: 30%;
-}
-.main-bc  .grid .persent-40
-{
-    flex-basis: 40%;
-}
-.main-bc  .grid .persent-50
-{
-    flex-basis: 50%;
-}
-.main-bc  .grid .persent-60
-{
-    flex-basis: 60%;
-}
-.main-bc  .grid .persent-70
-{
-    flex-basis: 70%;
-}
-.main-bc  .grid .persent-80
-{
-    flex-basis: 80%;
-}
-.main-bc  .grid .persent-90
-{
-    flex-basis: 90%;
-}
-.main-bc  .grid .persent-100
-{
-    flex-basis: 100%;
-}
 /*----------------------
  	Features Section
 ----------------------*/
@@ -864,6 +939,96 @@ footer p a{
 .square {
     aspect-ratio: 1 !important;
 }
+.aspect-auto {
+    aspect-ratio: auto !important;
+}
+.hr-top {
+    border-top: solid 1px #888;
+}
+.hr-bottom {
+    border-bottom: solid 1px #888;
+}
+.height-v100 {
+    height: 100vh;
+}
+.height-v90 {
+    height: 90vh;
+}
+.height-v80 {
+    height: 80vh;
+}
+.height-v70 {
+    height: 70vh;
+}
+.height-v60 {
+    height: 60vh;
+}
+.height-v50 {
+    height: 50vh;
+}
+.height-v40 {
+    height: 40vh;
+}
+.height-v30 {
+    height: 30vh;
+}
+.height-v20 {
+    height: 20vh;
+}
+.height-v10 {
+    height: 10vh;
+}
 .counts-product-view{
     color: #888;
+}
+.persent-10
+{
+    flex-basis: 10% !important;
+}
+.persent-20
+{
+    flex-basis: 20% !important;
+}
+.persent-30
+{
+    flex-basis: 30% !important;
+}
+.persent-40
+{
+    flex-basis: 40% !important;
+}
+.persent-50
+{
+    flex-basis: 50% !important;
+}
+.persent-60
+{
+    flex-basis: 60% !important;
+}
+.persent-70
+{
+    flex-basis: 70% !important;
+}
+.persent-80
+{
+    flex-basis: 80% !important;
+}
+.persent-90
+{
+    flex-basis: 90% !important;
+}
+.persent-100
+{
+    flex-basis: 100% !important;
+}
+.persent-auto
+{
+    flex-basis: auto !important;
+}
+
+/*  product detail  */
+.price-detail {
+    width: 100%;
+    text-align: right;
+    font-size: calc(1.5vw + 6pt);
 }
