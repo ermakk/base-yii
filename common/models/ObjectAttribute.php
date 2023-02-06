@@ -108,6 +108,7 @@ class ObjectAttribute extends Attribute
      */
     public function getValues($entityId = null)
     {
+//        var_dump($this->hasOne(ObjectAttributeValue::class, ['attributeId' => 'id'])->where(['entityId' => $entityId])->one());
         return $this->hasOne(ObjectAttributeValue::class, ['attributeId' => 'id'])->where(['entityId' => $entityId])->one()['value'];
     }
 

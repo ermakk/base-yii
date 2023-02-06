@@ -5,7 +5,9 @@
 
 namespace yarcode\eav\inputs;
 
+use common\models\ObjectAttributeValue;
 use yarcode\eav\AttributeHandler;
+use yii\helpers\ArrayHelper;
 
 class TextInput extends AttributeHandler
 {
@@ -17,7 +19,17 @@ class TextInput extends AttributeHandler
 
     public function run()
     {
-        return $this->owner->activeForm->field($this->owner, $this->getAttributeName())
-            ->textInput();
+        if($this->owner->activeForm !==  null) {
+            return $this->owner->activeForm->field($this->owner, $this->getAttributeName())
+                ->textInput();
+        }  else {
+            $name = $this->attributeModel->name;
+            $OAVs = $this->attributeModel->getObjectAttributeValues()->andWhere(['entityId' => $this->owner->entityModel->id])->all();
+            $rOAV = [];
+            foreach ($OAVs as $OAV){ /** @var ObjectAttributeValue $OAV  */
+                $rOAV[] = $OAV->val;
+            }
+            return '<div class="persent-50">'.$name. ':</div> <div class="persent-50">'.($rOAV ? implode(', ', $rOAV) : 'Не указано').'</div>';
+        }
     }
 }

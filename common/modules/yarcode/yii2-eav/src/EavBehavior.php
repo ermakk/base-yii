@@ -35,7 +35,6 @@ class EavBehavior extends Behavior
      */
     public function getEavModel()
     {
-
         if (!$this->dynamicModel instanceof DynamicModel) {
             $this->dynamicModel = DynamicModel::create([
                 'entityModel' => $this->owner,

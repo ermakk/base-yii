@@ -3,6 +3,7 @@
 /** @var \common\models\Product $product */
 
 use common\models\ObjectAttributeValue;
+use yii\bootstrap4\ActiveForm;
 
 $this->title = $product ? $product->title : 'Ошибка';
 $this->params['breadcrumbs'][] = ['label' => 'Каталог', 'url' => \yii\helpers\Url::to(['/product/category'])];
@@ -62,24 +63,13 @@ $this->params['breadcrumbs'][] = $this->title;
             Характеристики:
             </div>
             <?php
-            foreach ($product->eavAttributes as $attribute){ /** @var \common\models\ObjectAttribute  $attribute **/?>
+            $eav = $product->getEavModel();
+            foreach ( $eav->handlers as $handler){ ?>
+
                 <div class="persent-100 d-flex flex-row ml-5">
-                    <div class="persent-50">
-                        <?= $attribute->name ?>:
-                    </div>
-                    <div class="persent-50">
-                        <?php
-                            switch ($attribute->typeId) {
-                                case 1: $attribute->getValues($product->id);
-                                case 2: var_dump($attribute->typeId);
-                                case 3: var_dump($attribute->getValues($product->id));
-                                case 4: var_dump($attribute->getValues($product->id));
-                                default: echo 'Нет данных';
-                            }
-                        ?>
-                    </div>
+                    <?php echo $handler->run(); ?>
                 </div>
-            <?php }?>
+            <?php } ?>
         </div>
     </div>
 

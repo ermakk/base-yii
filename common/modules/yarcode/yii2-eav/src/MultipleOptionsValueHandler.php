@@ -60,9 +60,11 @@ class MultipleOptionsValueHandler extends ValueHandler
 
         $query = clone $baseQuery;
         $query->andWhere("optionId NOT IN (:options)");
-        $valueClass::deleteAll($query->where, [
-            'options' => implode(',', $allOptions),
-        ]);
+        if($valueClass::findAll($query->where, ['options' => implode(',', $allOptions)])) {
+            $valueClass::deleteAll($query->where, [
+                'options' => implode(',', $allOptions),
+            ]);
+        }
 
         // then we delete unselected options
         $selectedOptions = $dynamicModel->attributes[$this->attributeHandler->getAttributeName()];
@@ -73,9 +75,11 @@ class MultipleOptionsValueHandler extends ValueHandler
         $query = clone $baseQuery;
         $query->andWhere("optionId IN (:options)");
 
-        $valueClass::deleteAll($query->where, [
-            'options' => implode(',', $deleteOptions),
-        ]);
+        if($valueClass::findAll($query->where, ['options' => implode(',', $deleteOptions)])) {
+            $valueClass::deleteAll($query->where, [
+                'options' => implode(',', $deleteOptions),
+            ]);
+        }
 
         // third we insert missing options
         foreach ($selectedOptions as $id) {

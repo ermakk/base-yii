@@ -67,7 +67,6 @@ class DynamicModel extends BaseDynamicModel
                 if ($handler->valueHandler instanceof OptionValueHandler) {
                     $model->addRule($key, 'default', ['value' => $attribute->defaultOptionId]);
                 }
-
                 $model->handlers[$key] = $handler;
             }
         }
