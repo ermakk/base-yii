@@ -230,10 +230,15 @@ public function beforeSave($insert)
     /**
      * @return yii\db\ActiveQuery
      */
-    public function getEavAttributes()
+    public function getEavAttributes($selected = null)
     {
 //        $query = ObjectAttribute::find()->where(['categoryId' => $this->category_id]);
-        $query = $this->hasMany(ObjectAttribute::className(), ['categoryId' => 'parentCategoryList']);
+        if($selected == null) {
+            $query = $this->hasMany(ObjectAttribute::className(), ['categoryId' => 'parentCategoryList']);
+        } else {
+            $query = $this->hasMany(ObjectAttribute::className(), ['categoryId' => 'parentCategoryList'])->where(['selected' => $selected]);
+        }
+//        $query = $this->hasMany(ObjectAttribute::className(), ['categoryId' => 'parentCategoryList'])->where(['selected' => $selected]);
 //        var_dump($query); die;
         $query->multiple = true;
         return $query;
@@ -265,6 +270,24 @@ public function beforeSave($insert)
     public function getCategory()
     {
         return $this->hasOne(ProductCategory::class, ['id' => 'category_id']);
+    }
+    /**
+     * Gets query for [[ProductReview]].
+     *
+     * @return \yii\db\ActiveQuery|ProductCategoryQuery
+     */
+    public function getReviews()
+    {
+        return $this->hasMany(ProductReview::class, ['product_id' => 'id']);
+    }
+    /**
+     * Gets query for [[ProductReview]].
+     *
+     * @return \yii\db\ActiveQuery|ProductReviewQuery
+     */
+    public function getReatingValue()
+    {
+        return $this->getReviews()->average('reating');
     }
 
     /**

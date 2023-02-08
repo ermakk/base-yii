@@ -3,6 +3,7 @@
 /** @var \common\models\Product $product */
 
 use common\models\ObjectAttributeValue;
+use kartik\rating\StarRating;
 use yii\bootstrap4\ActiveForm;
 
 $this->title = $product ? $product->title : 'Ошибка';
@@ -24,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
 /**
  * Хлебные крошки.
  */
-
+//var_dump($product->getReatingValue());
 ?>
 <div class="d-flex flex-row p-5" style="width: 100vw">
     <div class="d-flex flex-column persent-70">
@@ -48,10 +49,26 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="persent-30">
         <div class="d-flex flex-column">
             <div class="persent-100">
+
                 <h4><?= $product->title; ?></h4>
-                <div class="artikul">Артикул: <span><?= $product->artikul ?></span></div>
+                <div class="d-flex flex-row">
+                    <div class="persent-50">
+                        <div class="artikul">Артикул: <span><?= $product->artikul ?></span></div>
+                    </div>
+                    <div class="persent-50">
+                        <?= StarRating::widget([
+                                'name' => 'reating',
+                            'value' =>  $product->getReatingValue(),
+                            'pluginOptions' => [
+                                'displayOnly' => true,
+                                'size' => 'xs',
+                            ]
+                        ]);?>
+                    </div>
+                </div>
             </div>
-            <div class="d-flex flex-row p-5">
+
+            <div class="d-flex flex-row p-3">
                 <div class="persent-50">
                     <div class="product-action btn btn-success">Купить&nbsp;</div>
                 </div>

@@ -38,7 +38,7 @@ class ObjectAttribute extends Attribute
     public function rules()
     {
         return [
-            [['categoryId', 'typeId', 'defaultOptionId', 'required'], 'integer'],
+            [['categoryId', 'typeId', 'defaultOptionId', 'required', 'selected'], 'integer'],
             [['name', 'defaultValue'], 'string', 'max' => 255],
             [['categoryId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductCategory::class, 'targetAttribute' => ['categoryId' => 'id']],
             [['defaultOptionId'], 'exist', 'skipOnError' => true, 'targetClass' => ObjectAttributeOption::class, 'targetAttribute' => ['defaultOptionId' => 'id']],

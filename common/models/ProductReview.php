@@ -32,6 +32,7 @@ class ProductReview extends \yii\db\ActiveRecord
     {
         return [
             [['value', 'product_id', 'user_created'], 'required'],
+            [['reating'], 'float'],
             [['value'], 'string'],
             [['product_id', 'user_created'], 'integer'],
             [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::class, 'targetAttribute' => ['product_id' => 'id']],
@@ -49,6 +50,7 @@ class ProductReview extends \yii\db\ActiveRecord
             'value' => 'Отзыв',
             'product_id' => 'Продукт',
             'user_created' => 'Пользователь',
+            'reating' => 'Рейтинг',
         ];
     }
 

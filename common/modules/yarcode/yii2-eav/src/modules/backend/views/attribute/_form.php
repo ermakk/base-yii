@@ -16,6 +16,7 @@ use yii\helpers\ArrayHelper;
     <?= $form->field($model, 'typeId')->dropDownList(ArrayHelper::map($typesQuery->all(), 'id', 'name')) ?>
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'required')->checkbox() ?>
+    <?= $form->field($model, 'selected')->checkbox() ?>
     <?= $form->field($model, 'defaultValue')->textInput() ?>
     <?= $form->field($model, 'defaultOptionId')->dropDownList(
         \yii\helpers\ArrayHelper::map($model->options, 'id', 'value'),

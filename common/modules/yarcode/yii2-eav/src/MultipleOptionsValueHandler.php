@@ -55,9 +55,9 @@ class MultipleOptionsValueHandler extends ValueHandler
         ]);
 
         $allOptions = [];
-        foreach ($this->attributeHandler->attributeModel->options as $option)
+        foreach ($this->attributeHandler->attributeModel->options as $option) {
             $allOptions[] = $option->getPrimaryKey();
-
+        }
         $query = clone $baseQuery;
         $query->andWhere("optionId NOT IN (:options)");
         if($valueClass::findAll($query->where, ['options' => implode(',', $allOptions)])) {
@@ -73,12 +73,12 @@ class MultipleOptionsValueHandler extends ValueHandler
         $deleteOptions = array_diff($allOptions, $selectedOptions);
 
         $query = clone $baseQuery;
-        $query->andWhere("optionId IN (:options)");
-
-        if($valueClass::findAll($query->where, ['options' => implode(',', $deleteOptions)])) {
-            $valueClass::deleteAll($query->where, [
-                'options' => implode(',', $deleteOptions),
-            ]);
+        if(count($deleteOptions) > 0) {
+            $query->andWhere("optionId IN ('".implode("', '", $deleteOptions)."')");
+//            var_dump($valueClass::find()->where($query->where)->createCommand()->getRawSql()); die;
+            if($valueClass::find()->where($query->where)) {
+                $valueClass::deleteAll($query->where);
+            }
         }
 
         // third we insert missing options

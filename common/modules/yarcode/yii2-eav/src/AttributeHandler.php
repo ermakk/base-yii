@@ -69,6 +69,13 @@ abstract class AttributeHandler extends Widget
     {
         return $this->owner->fieldPrefix . strval($this->attributeModel->getPrimaryKey());
     }
+    /**
+     * @return string
+     */
+    public function getAttributeLabel()
+    {
+        return strval($this->attributeModel->name);
+    }
 
     /**
      * @return array
