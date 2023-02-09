@@ -39,7 +39,7 @@ use yii\bootstrap4\NavBar;
             . Html::endForm()
             . '</li>';
         $menuItems[] =
-            ['label' => 'Корзина', 'class'=>"fa fa-shopping-basket", 'url' => ['/site/orders'], 'visible' => !Yii::$app->user->isGuest];
+            ['label' => 'Корзина', 'option' => ['id' => 'basket-link'],'class'=>"fa fa-shopping-basket", 'url' => ['/site/orders']/*, 'visible' => !Yii::$app->user->isGuest*/];
     }
     echo Nav::widget([
 //        'options' => ['class' => 'navbar-nav'],

@@ -37,10 +37,11 @@ class EavBehavior extends Behavior
     {
         if (!$this->dynamicModel instanceof DynamicModel) {
             $this->dynamicModel = DynamicModel::create([
-                'entityModel' => $this->owner,
-                'valueClass' => $this->valueClass,
-                'behavior' => $this,
-            ]);
+                    'entityModel' => $this->owner,
+                    'valueClass' => $this->valueClass,
+                    'behavior' => $this,
+                ]
+            );
         }
         return $this->dynamicModel;
     }

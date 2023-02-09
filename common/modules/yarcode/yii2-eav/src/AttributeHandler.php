@@ -27,6 +27,7 @@ abstract class AttributeHandler extends Widget
     /** @var Attribute */
     public $attributeModel;
 
+
     /**
      * @param DynamicModel $owner
      * @param Attribute $attributeModel

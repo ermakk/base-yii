@@ -78,6 +78,15 @@ class SiteController extends Controller
         $this->layout = 'main_page';
         return $this->render('index');
     }
+    /**
+     * Displays homepage.
+     *
+     * @return mixed
+     */
+    public function actionOrders()
+    {
+        return $this->render('orders');
+    }
 
     /**
      * Logs in a user.

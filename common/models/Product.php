@@ -230,16 +230,27 @@ public function beforeSave($insert)
     /**
      * @return yii\db\ActiveQuery
      */
-    public function getEavAttributes($selected = null)
+    public function getEavAttributes()
     {
-//        $query = ObjectAttribute::find()->where(['categoryId' => $this->category_id]);
-        if($selected == null) {
-            $query = $this->hasMany(ObjectAttribute::className(), ['categoryId' => 'parentCategoryList']);
-        } else {
-            $query = $this->hasMany(ObjectAttribute::className(), ['categoryId' => 'parentCategoryList'])->where(['selected' => $selected]);
-        }
-//        $query = $this->hasMany(ObjectAttribute::className(), ['categoryId' => 'parentCategoryList'])->where(['selected' => $selected]);
-//        var_dump($query); die;
+        $query = $this->hasMany(ObjectAttribute::className(), ['categoryId' => 'parentCategoryList']);
+        $query->multiple = true;
+        return $query;
+    }
+    /**
+     * @return yii\db\ActiveQuery
+     */
+    public function getEavAttributesNoSelected()
+    {
+        $query = $this->hasMany(ObjectAttribute::className(), ['categoryId' => 'parentCategoryList'])->where(['selected' => false]);
+        $query->multiple = true;
+        return $query;
+    }
+    /**
+     * @return yii\db\ActiveQuery
+     */
+    public function getEavAttributesSelected()
+    {
+        $query = $this->hasMany(ObjectAttribute::className(), ['categoryId' => 'parentCategoryList'])->where(['selected' => true]);
         $query->multiple = true;
         return $query;
     }

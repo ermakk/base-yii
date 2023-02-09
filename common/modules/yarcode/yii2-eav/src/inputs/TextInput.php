@@ -17,19 +17,27 @@ class TextInput extends AttributeHandler
         $this->owner->addRule($this->getAttributeName(), 'string', ['max' => 255]);
     }
 
-    public function run()
+    public function run($option = [])
     {
+        $option['selected'] = array_key_exists('selected', $option) ? $option['selected'] : null;
         if($this->owner->activeForm !==  null) {
             return $this->owner->activeForm->field($this->owner, $this->getAttributeName())
                 ->textInput();
         }  else {
-            $name = $this->attributeModel->name;
-            $OAVs = $this->attributeModel->getObjectAttributeValues()->andWhere(['entityId' => $this->owner->entityModel->id])->all();
-            $rOAV = [];
-            foreach ($OAVs as $OAV){ /** @var ObjectAttributeValue $OAV  */
-                $rOAV[] = $OAV->val;
+
+            if($this->attributeModel->attributes['selected'] == $option['selected']) {
+                if($option['selected'] == false) {
+                    $name = $this->attributeModel->name;
+                    $OAVs = $this->attributeModel->getObjectAttributeValues()->andWhere(['entityId' => $this->owner->entityModel->id])->all();
+                    $rOAV = [];
+                    foreach ($OAVs as $OAV) {
+                        /** @var ObjectAttributeValue $OAV */
+                        $rOAV[] = $OAV->val;
+                    }
+                    return '<div class="persent-50">' . $name . ':</div> <div class="persent-50">' . ($rOAV ? implode(', ', $rOAV) : 'Не указано') . '</div>';
+                } else {
+                }
             }
-            return '<div class="persent-50">'.$name. ':</div> <div class="persent-50">'.($rOAV ? implode(', ', $rOAV) : 'Не указано').'</div>';
         }
     }
 }
